@@ -1,0 +1,21 @@
+{
+  "files.exclude": {
+    ".dart_tool": true,
+    ".idea": true,
+    "android": true,
+    "ios": true,
+    ".metadata": true,
+    ".packages": true,
+    "analysis_options.yaml": true,
+    "notes_app.iml": true,
+    "pubspec.lock": true,
+    "build": true,
+    ".flutter-plugins": true,
+    ".flutter-plugins-dependencies": true
+  },
+  "editor.formatOnSave": true,
+  "editor.rulers": [
+    100
+  ],
+  "dart.lineLength": 100
+}
