@@ -1,5 +1,6 @@
 import 'package:async/async.dart';
 import 'package:notes_app/domain/entities/note.dart';
+import 'package:notes_app/domain/error_codes.dart';
 import 'package:notes_app/domain/repositories/i_note_repository.dart';
 
 class GetNoteByIdUseCase {
@@ -11,7 +12,7 @@ class GetNoteByIdUseCase {
     try {
       Note? note = await _noteRepository.getById(id);
 
-      if (note == null) return Result.error('failure-note-not-found');
+      if (note == null) return Result.error(errorNoteNotFound);
 
       return Result.value(note);
     } catch (err) {

@@ -123,16 +123,18 @@ void main() {
       // arrange
       when(mockDatabase.query(
         table,
-        where: 'title LIKE %?%',
-        whereArgs: [pattern],
+        where: 'title LIKE ?',
+        whereArgs: ['%$pattern%'],
+        orderBy: 'date ASC',
       )).thenAnswer((_) async => [noteModel.toMap()]);
       // act
       await sut.searchNotes(pattern);
       // assert
       verify(mockDatabase.query(
         table,
-        where: 'title LIKE %?%',
-        whereArgs: [pattern],
+        where: 'title LIKE ?',
+        whereArgs: ['%$pattern%'],
+        orderBy: 'date ASC',
       )).called(1);
     });
   });

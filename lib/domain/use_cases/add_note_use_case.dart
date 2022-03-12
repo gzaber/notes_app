@@ -1,3 +1,4 @@
+import 'package:notes_app/domain/error_codes.dart';
 import 'package:notes_app/domain/repositories/i_note_repository.dart';
 import 'package:async/async.dart';
 
@@ -8,7 +9,7 @@ class AddNoteUseCase {
 
   Future<Result<void>> call(String title, String content) async {
     try {
-      if (title.isEmpty) return Result.error('failure-title-empty');
+      if (title.isEmpty) return Result.error(errorEmptyTitle);
 
       return Result.value(await _noteRepository.add(title, content));
     } catch (err) {
