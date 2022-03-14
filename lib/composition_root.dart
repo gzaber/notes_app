@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:notes_app/domain/entities/note.dart';
 import 'package:notes_app/presentation/ui/pages/home_page.dart';
 import 'package:notes_app/presentation/ui/pages/note_page.dart';
+import 'package:notes_app/presentation/ui/pages/search_page.dart';
 import 'package:notes_app/presentation/ui/pages/upsert_page.dart';
 
 class CompositionRoot {
@@ -15,5 +16,9 @@ class CompositionRoot {
 
   static Widget composeUpsertPage(Note? note) {
     return UpsertPage(note: note);
+  }
+
+  static Widget composeSearchPage() {
+    return const SearchPage();
   }
 }

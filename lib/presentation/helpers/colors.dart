@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-const colorPalette = [
+const Color kButtonColor = Color(0xff3b3b3b);
+
+const List<Color> colorPalette = [
   Color(0xffff8a80),
   Color(0xffff80ab),
   Color(0xffea80fc),

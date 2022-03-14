@@ -5,10 +5,13 @@ class NoteCard extends StatelessWidget {
   final Note note;
   final Color color;
   final Function() onTap;
+  final Function() onLongPress;
+
   const NoteCard({
     required this.note,
     required this.color,
     required this.onTap,
+    required this.onLongPress,
     Key? key,
   }) : super(key: key);
 
@@ -25,6 +28,7 @@ class NoteCard extends StatelessWidget {
           color: Colors.transparent,
           child: InkWell(
             onTap: onTap,
+            onLongPress: onLongPress,
             borderRadius: const BorderRadius.all(Radius.circular(5.0)),
             child: Padding(
               padding: const EdgeInsets.all(16.0),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/domain/entities/note.dart';
+import 'package:notes_app/presentation/helpers/constants.dart';
 
 import '../widgets/custom_elevated_button.dart';
 
@@ -17,7 +18,7 @@ class UpsertPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        leadingWidth: 105.0,
+        leadingWidth: kLeadingWidth,
         leading: CustomElevatedButton(
           icon: Icons.arrow_back_ios,
           onPressed: () => Navigator.of(context).pop(),
@@ -31,7 +32,7 @@ class UpsertPage extends StatelessWidget {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: kSidePadding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -41,7 +42,7 @@ class UpsertPage extends StatelessWidget {
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
-                  hintText: 'Title',
+                  hintText: kTitle,
                   hintStyle:
                       Theme.of(context).textTheme.headlineMedium!.copyWith(color: Colors.grey),
                 ),
@@ -54,7 +55,7 @@ class UpsertPage extends StatelessWidget {
                 cursorColor: Colors.white,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
-                  hintText: 'Type something...',
+                  hintText: kTypeSomething,
                   hintStyle:
                       Theme.of(context).textTheme.headlineSmall!.copyWith(color: Colors.grey),
                 ),

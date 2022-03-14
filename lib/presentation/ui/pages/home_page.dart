@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:notes_app/composition_root.dart';
 import 'package:notes_app/domain/entities/note.dart';
 import 'package:notes_app/presentation/helpers/colors.dart';
+import 'package:notes_app/presentation/helpers/constants.dart';
 
 import '../widgets/custom_elevated_button.dart';
 import '../widgets/note_card.dart';
@@ -15,11 +16,16 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Notes'),
+        title: const Text(kNotes),
+        titleSpacing: kSidePadding,
         actions: [
           CustomElevatedButton(
             icon: Icons.search,
-            onPressed: () {},
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => CompositionRoot.composeSearchPage(),
+              ),
+            ),
           ),
         ],
       ),
@@ -36,7 +42,7 @@ class HomePage extends StatelessWidget {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: kSidePadding),
           child: _buildNoteList(context, testNotes),
         ),
       ),
@@ -54,9 +60,30 @@ class HomePage extends StatelessWidget {
                 builder: (_) => CompositionRoot.composeNotePage(notes[index]),
               ),
             ),
+            onLongPress: () => _showDeleteDialog(context),
           ),
         ),
       );
+
+  _showDeleteDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (_) => SimpleDialog(
+              backgroundColor: kButtonColor,
+              contentPadding: const EdgeInsets.all(8.0),
+              children: [
+                SimpleDialogOption(
+                  onPressed: () {},
+                  padding: const EdgeInsets.all(8.0),
+                  child: const Icon(
+                    Icons.delete,
+                    size: 30.0,
+                    color: Colors.white,
+                  ),
+                )
+              ],
+            ));
+  }
 }
 
 List<Note> testNotes = [
