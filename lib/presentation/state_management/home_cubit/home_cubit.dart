@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:notes_app/domain/entities/note.dart';
 import 'package:notes_app/domain/use_cases/delete_note_use_case.dart';

@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:notes_app/domain/entities/note.dart';
 import 'package:notes_app/domain/use_cases/add_note_use_case.dart';
@@ -18,7 +19,7 @@ class UpsertCubit extends Cubit<UpsertState> {
     if (result.asError != null) {
       emit(UpsertFailure(result.asError!.error.toString()));
     } else {
-      emit(UpsertAddNoteSuccess());
+      emit(UpsertAddSuccess());
     }
   }
 
@@ -28,7 +29,7 @@ class UpsertCubit extends Cubit<UpsertState> {
     if (result.asError != null) {
       emit(UpsertFailure(result.asError!.error.toString()));
     } else {
-      emit(UpsertUpdateNoteSuccess());
+      emit(UpsertUpdateSuccess());
     }
   }
 }
