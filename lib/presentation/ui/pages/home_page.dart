@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:notes_app/composition_root.dart';
 import 'package:notes_app/domain/entities/note.dart';
 import 'package:notes_app/presentation/helpers/colors.dart';
@@ -41,18 +42,19 @@ class HomePage extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: kSidePadding),
-          child: _buildNoteList(context, testNotes),
-        ),
+        child: _buildMasonryGridView(context, testNotes),
       ),
     );
   }
 
-  _buildNoteList(BuildContext context, List<Note> notes) => Column(
-        children: List.generate(
-          notes.length,
-          (index) => NoteCard(
+  _buildMasonryGridView(BuildContext context, List<Note> notes) => MasonryGridView.count(
+        itemCount: testNotes.length,
+        crossAxisCount: 2,
+        mainAxisSpacing: 8.0,
+        crossAxisSpacing: 8.0,
+        padding: const EdgeInsets.symmetric(horizontal: kSidePadding),
+        itemBuilder: (context, index) {
+          return NoteCard(
             note: notes[index],
             color: colorPalette[Random().nextInt(colorPalette.length)],
             onTap: () => Navigator.of(context).push(
@@ -61,8 +63,8 @@ class HomePage extends StatelessWidget {
               ),
             ),
             onLongPress: () => _showDeleteDialog(context),
-          ),
-        ),
+          );
+        },
       );
 
   _showDeleteDialog(BuildContext context) {
@@ -90,7 +92,7 @@ List<Note> testNotes = [
   Note(
     id: 'id1',
     date: '01-01-2022',
-    title: 'How to make your personal brand stand out online',
+    title: 'How to make your personal brand stand out online, wakamaka flo beach',
     content:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
   ),

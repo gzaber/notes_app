@@ -3,9 +3,7 @@ import 'package:notes_app/composition_root.dart';
 
 void main() {
   runApp(
-    MyApp(
-      startPage: CompositionRoot.composeHomePage(),
-    ),
+    MyApp(startPage: CompositionRoot.composeHomePage()),
   );
 }
 
@@ -25,7 +23,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.black,
           toolbarHeight: 80.0,
           elevation: 0.0,
-          titleTextStyle: Theme.of(context).textTheme.headline3!.copyWith(color: Colors.white),
+          titleTextStyle: Theme.of(context).textTheme.headlineLarge!.copyWith(color: Colors.white),
         ),
         scaffoldBackgroundColor: Colors.black,
         floatingActionButtonTheme:

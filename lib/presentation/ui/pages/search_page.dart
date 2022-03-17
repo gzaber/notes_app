@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:notes_app/presentation/helpers/constants.dart';
 
 import '../widgets/custom_elevated_button.dart';
+import '../widgets/custom_text_field.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -23,16 +24,10 @@ class SearchPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextField(
-                controller: TextEditingController(text: ''),
-                cursorColor: Colors.white,
-                keyboardType: TextInputType.text,
-                textInputAction: TextInputAction.next,
-                decoration: InputDecoration(
-                  hintText: kTypeSomething,
-                  hintStyle:
-                      Theme.of(context).textTheme.headlineMedium!.copyWith(color: Colors.grey),
-                ),
+              CustomTextField(
+                text: '',
+                hintText: kTypeSomething,
+                textInputAction: TextInputAction.done,
                 style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: Colors.grey),
                 maxLines: 1,
               ),

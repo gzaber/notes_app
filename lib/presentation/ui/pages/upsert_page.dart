@@ -3,6 +3,7 @@ import 'package:notes_app/domain/entities/note.dart';
 import 'package:notes_app/presentation/helpers/constants.dart';
 
 import '../widgets/custom_elevated_button.dart';
+import '../widgets/custom_text_field.dart';
 
 class UpsertPage extends StatelessWidget {
   final Note? note;
@@ -36,33 +37,18 @@ class UpsertPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextField(
-                controller: TextEditingController(text: title),
-                cursorColor: Colors.white,
-                keyboardType: TextInputType.text,
-                textInputAction: TextInputAction.next,
-                decoration: InputDecoration(
-                  hintText: kTitle,
-                  hintStyle:
-                      Theme.of(context).textTheme.headlineMedium!.copyWith(color: Colors.grey),
-                ),
+              CustomTextField(
+                text: title,
+                hintText: kTitle,
                 style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: Colors.grey),
-                minLines: 1,
-                maxLines: 5,
+                maxLines: 3,
               ),
-              TextField(
-                controller: TextEditingController(text: content),
-                cursorColor: Colors.white,
-                keyboardType: TextInputType.text,
-                decoration: InputDecoration(
-                  hintText: kTypeSomething,
-                  hintStyle:
-                      Theme.of(context).textTheme.headlineSmall!.copyWith(color: Colors.grey),
-                ),
+              CustomTextField(
+                text: content,
+                hintText: kTypeSomething,
                 style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Colors.grey),
-                minLines: 1,
                 maxLines: 15,
-              )
+              ),
             ],
           ),
         ),
