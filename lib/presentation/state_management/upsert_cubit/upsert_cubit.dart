@@ -1,9 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:notes_app/domain/entities/note.dart';
-import 'package:notes_app/domain/use_cases/add_note_use_case.dart';
-import 'package:notes_app/domain/use_cases/update_note_use_case.dart';
+
+import '../../../domain/entities/note.dart';
+import '../../../domain/use_cases/use_cases.dart';
+import '../../helpers/constants.dart';
 
 part 'upsert_state.dart';
 
@@ -19,7 +20,7 @@ class UpsertCubit extends Cubit<UpsertState> {
     if (result.asError != null) {
       emit(UpsertFailure(result.asError!.error.toString()));
     } else {
-      emit(UpsertAddSuccess());
+      emit(UpsertAddSuccess(kAddSuccess));
     }
   }
 
@@ -29,7 +30,7 @@ class UpsertCubit extends Cubit<UpsertState> {
     if (result.asError != null) {
       emit(UpsertFailure(result.asError!.error.toString()));
     } else {
-      emit(UpsertUpdateSuccess());
+      emit(UpsertUpdateSuccess(kUpdateSuccess));
     }
   }
 }

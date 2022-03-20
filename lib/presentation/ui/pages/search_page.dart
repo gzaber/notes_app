@@ -1,8 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:notes_app/presentation/helpers/constants.dart';
+import 'dart:math';
 
-import '../widgets/custom_elevated_button.dart';
-import '../widgets/custom_text_field.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../composition_root.dart';
+import '../../../domain/entities/note.dart';
+import '../../helpers/colors.dart';
+import '../../helpers/constants.dart';
+import '../../state_management/search_cubit/search_cubit.dart';
+import '../widgets/widgets.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -19,8 +25,8 @@ class SearchPage extends StatelessWidget {
         title: const Text(kSearch),
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: kSidePadding),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -30,9 +36,60 @@ class SearchPage extends StatelessWidget {
                 textInputAction: TextInputAction.done,
                 style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: Colors.grey),
                 maxLines: 1,
+                onChanged: (val) {
+                  if (val.isNotEmpty) {
+                    BlocProvider.of<SearchCubit>(context).searchNotes(val);
+                  } else {
+                    BlocProvider.of<SearchCubit>(context).clearSearchResults();
+                  }
+                },
+              ),
+              Expanded(
+                child: BlocBuilder<SearchCubit, SearchState>(
+                  builder: (_, state) {
+                    if (state is SearchLoading) {
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                        ),
+                      );
+                    }
+                    if (state is SearchLoadSuccess) {
+                      return _buildNoteList(context, state.notes);
+                    }
+                    if (state is SearchFailure) {
+                      return Center(
+                        child: Text(
+                          state.message,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .copyWith(color: Colors.white),
+                        ),
+                      );
+                    }
+                    return const SizedBox();
+                  },
+                ),
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  _buildNoteList(BuildContext context, List<Note> notes) {
+    return ListView.builder(
+      itemCount: notes.length,
+      itemBuilder: (_, index) => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4.0),
+        child: NoteCard(
+          note: notes[index],
+          color: colorPalette[Random().nextInt(colorPalette.length)],
+          onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => CompositionRoot.composeNotePage(notes[index].id))),
+          onLongPress: () {},
         ),
       ),
     );

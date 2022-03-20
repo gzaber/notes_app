@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:notes_app/domain/entities/note.dart';
-import 'package:notes_app/domain/use_cases/delete_note_use_case.dart';
-import 'package:notes_app/domain/use_cases/get_all_notes_use_case.dart';
+
+import '../../../domain/entities/note.dart';
+import '../../../domain/use_cases/use_cases.dart';
 
 part 'home_state.dart';
 

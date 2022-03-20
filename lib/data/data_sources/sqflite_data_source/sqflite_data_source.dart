@@ -1,6 +1,7 @@
-import 'package:notes_app/data/data_sources/i_data_source.dart';
-import 'package:notes_app/data/models/note_model.dart';
 import 'package:sqflite/sqflite.dart';
+
+import '../../models/note_model.dart';
+import '../i_data_source.dart';
 
 class SqfliteDataSource implements IDataSource {
   final Database _db;

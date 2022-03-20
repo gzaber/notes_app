@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app/presentation/helpers/colors.dart';
-import 'package:notes_app/presentation/helpers/constants.dart';
+
+import '../../helpers/colors.dart';
+import '../../helpers/constants.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   final IconData icon;

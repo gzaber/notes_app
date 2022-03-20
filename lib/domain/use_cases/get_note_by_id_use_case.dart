@@ -1,7 +1,8 @@
 import 'package:async/async.dart';
-import 'package:notes_app/domain/entities/note.dart';
-import 'package:notes_app/domain/error_codes.dart';
-import 'package:notes_app/domain/repositories/i_note_repository.dart';
+
+import '../entities/note.dart';
+import '../error_codes.dart';
+import '../repositories/i_note_repository.dart';
 
 class GetNoteByIdUseCase {
   final INoteRepository _noteRepository;

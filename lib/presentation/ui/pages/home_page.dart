@@ -1,54 +1,75 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:notes_app/composition_root.dart';
-import 'package:notes_app/domain/entities/note.dart';
-import 'package:notes_app/presentation/helpers/colors.dart';
-import 'package:notes_app/presentation/helpers/constants.dart';
 
-import '../widgets/custom_elevated_button.dart';
-import '../widgets/note_card.dart';
+import '../../../composition_root.dart';
+import '../../../domain/entities/note.dart';
+import '../../helpers/colors.dart';
+import '../../helpers/constants.dart';
+import '../../state_management/home_cubit/home_cubit.dart';
+import '../widgets/widgets.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<HomeCubit>(context).getAllNotes();
     return Scaffold(
       appBar: AppBar(
         title: const Text(kNotes),
         titleSpacing: kSidePadding,
         actions: [
           CustomElevatedButton(
-            icon: Icons.search,
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => CompositionRoot.composeSearchPage(),
-              ),
-            ),
-          ),
+              icon: Icons.search,
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (_) => CompositionRoot.composeSearchPage()))
+                    .then((_) => BlocProvider.of<HomeCubit>(context).getAllNotes());
+              }),
         ],
       ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(right: 10.0),
         child: FloatingActionButton(
-          onPressed: () => Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_) => CompositionRoot.composeUpsertPage(null),
-            ),
-          ),
+          onPressed: () => Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => CompositionRoot.composeUpsertPage(null)))
+              .then((_) => BlocProvider.of<HomeCubit>(context).getAllNotes()),
           child: const Icon(Icons.add, size: 30.0),
         ),
       ),
       body: SafeArea(
-        child: _buildMasonryGridView(context, testNotes),
+        child: BlocBuilder<HomeCubit, HomeState>(
+          builder: (context, state) {
+            if (state is HomeLoading) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                ),
+              );
+            }
+            if (state is HomeLoadSuccess) {
+              return _buildMasonryGridView(context, state.notes);
+            }
+            if (state is HomeFailure) {
+              return Center(
+                child: Text(
+                  state.message,
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Colors.white),
+                ),
+              );
+            }
+            return const SizedBox();
+          },
+        ),
       ),
     );
   }
 
   _buildMasonryGridView(BuildContext context, List<Note> notes) => MasonryGridView.count(
-        itemCount: testNotes.length,
+        itemCount: notes.length,
         crossAxisCount: 2,
         mainAxisSpacing: 8.0,
         crossAxisSpacing: 8.0,
@@ -57,78 +78,37 @@ class HomePage extends StatelessWidget {
           return NoteCard(
             note: notes[index],
             color: colorPalette[Random().nextInt(colorPalette.length)],
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => CompositionRoot.composeNotePage(notes[index]),
-              ),
-            ),
-            onLongPress: () => _showDeleteDialog(context),
+            onTap: () => Navigator.of(context)
+                .push(MaterialPageRoute(
+                    builder: (_) => CompositionRoot.composeNotePage(notes[index].id)))
+                .then((_) => BlocProvider.of<HomeCubit>(context).getAllNotes()),
+            onLongPress: () => _showDeleteDialog(context, notes[index].id),
           );
         },
       );
 
-  _showDeleteDialog(BuildContext context) {
+  _showDeleteDialog(BuildContext context, String id) {
     return showDialog(
-        context: context,
-        builder: (_) => SimpleDialog(
-              backgroundColor: kButtonColor,
-              contentPadding: const EdgeInsets.all(8.0),
-              children: [
-                SimpleDialogOption(
-                  onPressed: () {},
-                  padding: const EdgeInsets.all(8.0),
-                  child: const Icon(
-                    Icons.delete,
-                    size: 30.0,
-                    color: Colors.white,
-                  ),
-                )
-              ],
-            ));
+      context: context,
+      builder: (_) => SimpleDialog(
+        backgroundColor: kButtonColor,
+        contentPadding: const EdgeInsets.all(8.0),
+        children: [
+          SimpleDialogOption(
+            onPressed: () {
+              BlocProvider.of<HomeCubit>(context).deleteNote(id);
+              Navigator.of(context).pop();
+              BlocProvider.of<HomeCubit>(context).getAllNotes();
+            },
+            padding: const EdgeInsets.all(8.0),
+            child: const Icon(
+              Icons.delete,
+              size: 30.0,
+              color: Colors.white,
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
-
-List<Note> testNotes = [
-  Note(
-    id: 'id1',
-    date: '01-01-2022',
-    title: 'How to make your personal brand stand out online, wakamaka flo beach',
-    content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-  ),
-  Note(
-    id: 'id2',
-    date: '02-02-2022',
-    title: 'Beautiful weather app UI concepts we wish existed',
-    content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-  ),
-  Note(
-    id: 'id3',
-    date: '03-03-2022',
-    title: '10 excellent font pairing tools for designers',
-    content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-  ),
-  Note(
-    id: 'id1',
-    date: '01-01-2022',
-    title: 'How to make your personal brand stand out online',
-    content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-  ),
-  Note(
-    id: 'id2',
-    date: '02-02-2022',
-    title: 'Beautiful weather app UI concepts we wish existed',
-    content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-  ),
-  Note(
-    id: 'id3',
-    date: '03-03-2022',
-    title: '10 excellent font pairing tools for designers',
-    content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-  ),
-];

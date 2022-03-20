@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
-import 'package:notes_app/domain/entities/note.dart';
 import 'package:uuid/uuid.dart';
+
+import '../../domain/entities/note.dart';
 
 class NoteModel extends Note {
   NoteModel({

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app/composition_root.dart';
 
-void main() {
+import 'composition_root.dart';
+import 'presentation/helpers/colors.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await CompositionRoot.configure();
+
   runApp(
     MyApp(startPage: CompositionRoot.composeHomePage()),
   );
@@ -27,7 +32,7 @@ class MyApp extends StatelessWidget {
         ),
         scaffoldBackgroundColor: Colors.black,
         floatingActionButtonTheme:
-            const FloatingActionButtonThemeData(backgroundColor: Colors.black),
+            const FloatingActionButtonThemeData(backgroundColor: kButtonColor),
       ),
       home: startPage,
     );

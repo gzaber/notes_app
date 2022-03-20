@@ -1,3 +1,3 @@
-const errorEmptyTitle = 'error-empty-title';
-const errorNoNotesFound = 'error-no-notes-found';
-const errorNoteNotFound = 'error-note-not-found';
+const errorEmptyTitle = 'Title cannot be empty';
+const errorNoNotesFound = 'No notes found';
+const errorNoteNotFound = 'Note not found';

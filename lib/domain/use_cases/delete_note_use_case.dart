@@ -1,5 +1,6 @@
 import 'package:async/async.dart';
-import 'package:notes_app/domain/repositories/i_note_repository.dart';
+
+import '../repositories/i_note_repository.dart';
 
 class DeleteNoteUseCase {
   final INoteRepository _noteRepository;

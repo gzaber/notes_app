@@ -5,3 +5,6 @@ const String kNotes = 'Notes';
 const String kSearch = 'Search';
 const String kTitle = 'Title';
 const String kTypeSomething = 'Type something...';
+
+const String kAddSuccess = 'Note added successfully';
+const String kUpdateSuccess = 'Note updated successfully';

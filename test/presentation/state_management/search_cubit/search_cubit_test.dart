@@ -44,4 +44,13 @@ void main() {
       expect: () => [SearchLoading(), isA<SearchFailure>()],
     );
   });
+
+  group('clearSearchResults', () {
+    blocTest<SearchCubit, SearchState>(
+      'emits [SearchLoading, SearchLoadSuccess] when successful',
+      build: () => sut,
+      act: (cubit) => cubit.clearSearchResults(),
+      expect: () => [SearchLoading(), isA<SearchLoadSuccess>()],
+    );
+  });
 }

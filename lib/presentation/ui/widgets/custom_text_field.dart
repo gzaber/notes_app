@@ -6,6 +6,7 @@ class CustomTextField extends StatelessWidget {
   final TextStyle style;
   final int maxLines;
   final TextInputAction textInputAction;
+  final Function(String) onChanged;
 
   const CustomTextField({
     Key? key,
@@ -13,6 +14,7 @@ class CustomTextField extends StatelessWidget {
     required this.hintText,
     required this.style,
     required this.maxLines,
+    required this.onChanged,
     this.textInputAction = TextInputAction.newline,
   }) : super(key: key);
 
@@ -31,6 +33,7 @@ class CustomTextField extends StatelessWidget {
       style: style,
       minLines: 1,
       maxLines: maxLines,
+      onChanged: onChanged,
     );
   }
 }

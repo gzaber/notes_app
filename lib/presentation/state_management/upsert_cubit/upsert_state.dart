@@ -10,9 +10,23 @@ class UpsertInitial extends UpsertState {}
 
 class UpsertLoading extends UpsertState {}
 
-class UpsertAddSuccess extends UpsertState {}
+class UpsertAddSuccess extends UpsertState {
+  final String message;
 
-class UpsertUpdateSuccess extends UpsertState {}
+  UpsertAddSuccess(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
+
+class UpsertUpdateSuccess extends UpsertState {
+  final String message;
+
+  UpsertUpdateSuccess(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
 
 class UpsertFailure extends UpsertState {
   final String message;

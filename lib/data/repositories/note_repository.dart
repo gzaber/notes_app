@@ -1,7 +1,7 @@
-import 'package:notes_app/data/data_sources/i_data_source.dart';
-import 'package:notes_app/data/models/note_model.dart';
-import 'package:notes_app/domain/entities/note.dart';
-import 'package:notes_app/domain/repositories/i_note_repository.dart';
+import '../../domain/entities/note.dart';
+import '../../domain/repositories/i_note_repository.dart';
+import '../data_sources/i_data_source.dart';
+import '../models/note_model.dart';
 
 class NoteRepository implements INoteRepository {
   final IDataSource _dataSource;
