@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+import 'package:notes_app/presentation/helpers/constants.dart';
 
 import '../../../domain/entities/note.dart';
 import '../../../domain/use_cases/use_cases.dart';
@@ -29,7 +30,7 @@ class HomeCubit extends Cubit<HomeState> {
     if (result.asError != null) {
       emit(HomeFailure(result.asError!.error.toString()));
     } else {
-      emit(HomeDeleteSuccess());
+      emit(HomeDeleteSuccess(kDeleteSuccess));
     }
   }
 }

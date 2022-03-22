@@ -73,17 +73,26 @@ class NotePage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: 10.0),
           Text(
             note.title,
-            style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: Colors.white),
+            style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                  color: Colors.white,
+                  height: 1.2,
+                ),
           ),
-          const SizedBox(height: 10.0),
-          Text(note.date,
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.grey)),
-          const SizedBox(height: 10.0),
+          const SizedBox(height: 16.0),
+          Text(
+            note.date,
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.grey),
+          ),
+          const SizedBox(height: 16.0),
           Text(
             note.content,
-            style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Colors.white),
+            style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                  color: Colors.white,
+                  height: 1.4,
+                ),
           ),
         ],
       ),

@@ -89,12 +89,12 @@ void main() {
   group('getAllNotes', () {
     test('should perform a database query and return all notes', () async {
       // arrange
-      when(mockDatabase.query(table, orderBy: 'date ASC'))
+      when(mockDatabase.query(table, orderBy: 'date DESC'))
           .thenAnswer((_) async => [noteModel.toMap()]);
       // act
       await sut.getAllNotes();
       // assert
-      verify(mockDatabase.query(table, orderBy: 'date ASC')).called(1);
+      verify(mockDatabase.query(table, orderBy: 'date DESC')).called(1);
     });
   });
   // ===============================================================================================
@@ -125,7 +125,7 @@ void main() {
         table,
         where: 'title LIKE ?',
         whereArgs: ['%$pattern%'],
-        orderBy: 'date ASC',
+        orderBy: 'date DESC',
       )).thenAnswer((_) async => [noteModel.toMap()]);
       // act
       await sut.searchNotes(pattern);
@@ -134,7 +134,7 @@ void main() {
         table,
         where: 'title LIKE ?',
         whereArgs: ['%$pattern%'],
-        orderBy: 'date ASC',
+        orderBy: 'date DESC',
       )).called(1);
     });
   });

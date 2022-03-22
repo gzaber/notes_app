@@ -10,7 +10,14 @@ class HomeInitial extends HomeState {}
 
 class HomeLoading extends HomeState {}
 
-class HomeDeleteSuccess extends HomeState {}
+class HomeDeleteSuccess extends HomeState {
+  final String message;
+
+  HomeDeleteSuccess(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
 
 class HomeLoadSuccess extends HomeState {
   final List<Note> notes;

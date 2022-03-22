@@ -8,3 +8,4 @@ const String kTypeSomething = 'Type something...';
 
 const String kAddSuccess = 'Note added successfully';
 const String kUpdateSuccess = 'Note updated successfully';
+const String kDeleteSuccess = 'Note deleted successfully';

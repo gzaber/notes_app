@@ -45,7 +45,7 @@ class SqfliteDataSource implements IDataSource {
   Future<List<NoteModel>> getAllNotes() async {
     var listOfMaps = await _db.query(
       table,
-      orderBy: 'date ASC',
+      orderBy: 'date DESC',
     );
 
     if (listOfMaps.isEmpty) return [];
@@ -76,7 +76,7 @@ class SqfliteDataSource implements IDataSource {
       table,
       where: 'title LIKE ?',
       whereArgs: ['%$pattern%'],
-      orderBy: 'date ASC',
+      orderBy: 'date DESC',
     );
 
     if (listOfMaps.isEmpty) return [];

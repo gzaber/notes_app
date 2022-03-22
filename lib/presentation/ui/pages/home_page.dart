@@ -41,7 +41,7 @@ class HomePage extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: BlocBuilder<HomeCubit, HomeState>(
+        child: BlocConsumer<HomeCubit, HomeState>(
           builder: (context, state) {
             if (state is HomeLoading) {
               return const Center(
@@ -62,6 +62,13 @@ class HomePage extends StatelessWidget {
               );
             }
             return const SizedBox();
+          },
+          listener: (context, state) {
+            if (state is HomeDeleteSuccess) {
+              ScaffoldMessenger.of(context)
+                ..removeCurrentSnackBar()
+                ..showSnackBar(CustomSnackBar.show(context, state.message));
+            }
           },
         ),
       ),

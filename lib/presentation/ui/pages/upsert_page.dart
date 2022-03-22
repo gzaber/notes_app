@@ -56,21 +56,21 @@ class UpsertPage extends StatelessWidget {
               _hideLoader(context);
               ScaffoldMessenger.of(context)
                 ..removeCurrentSnackBar()
-                ..showSnackBar(SnackBar(content: Text(state.message)));
+                ..showSnackBar(CustomSnackBar.show(context, state.message));
               Navigator.of(context).pop();
             }
             if (state is UpsertUpdateSuccess) {
               _hideLoader(context);
               ScaffoldMessenger.of(context)
                 ..removeCurrentSnackBar()
-                ..showSnackBar(SnackBar(content: Text(state.message)));
+                ..showSnackBar(CustomSnackBar.show(context, state.message));
               Navigator.of(context).pop();
             }
             if (state is UpsertFailure) {
               _hideLoader(context);
               ScaffoldMessenger.of(context)
                 ..removeCurrentSnackBar()
-                ..showSnackBar(SnackBar(content: Text(state.message)));
+                ..showSnackBar(CustomSnackBar.show(context, state.message));
             }
           },
           child: SingleChildScrollView(

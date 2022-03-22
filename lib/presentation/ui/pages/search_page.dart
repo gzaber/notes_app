@@ -15,6 +15,7 @@ class SearchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String pattern = '';
     return Scaffold(
       appBar: AppBar(
         leadingWidth: kLeadingWidth,
@@ -37,6 +38,7 @@ class SearchPage extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: Colors.grey),
                 maxLines: 1,
                 onChanged: (val) {
+                  pattern = val;
                   if (val.isNotEmpty) {
                     BlocProvider.of<SearchCubit>(context).searchNotes(val);
                   } else {
@@ -55,7 +57,7 @@ class SearchPage extends StatelessWidget {
                       );
                     }
                     if (state is SearchLoadSuccess) {
-                      return _buildNoteList(context, state.notes);
+                      return _buildNoteList(context, state.notes, pattern);
                     }
                     if (state is SearchFailure) {
                       return Center(
@@ -79,7 +81,7 @@ class SearchPage extends StatelessWidget {
     );
   }
 
-  _buildNoteList(BuildContext context, List<Note> notes) {
+  _buildNoteList(BuildContext context, List<Note> notes, String pattern) {
     return ListView.builder(
       itemCount: notes.length,
       itemBuilder: (_, index) => Padding(
@@ -87,8 +89,10 @@ class SearchPage extends StatelessWidget {
         child: NoteCard(
           note: notes[index],
           color: colorPalette[Random().nextInt(colorPalette.length)],
-          onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => CompositionRoot.composeNotePage(notes[index].id))),
+          onTap: () => Navigator.of(context)
+              .push(MaterialPageRoute(
+                  builder: (_) => CompositionRoot.composeNotePage(notes[index].id)))
+              .then((_) => BlocProvider.of<SearchCubit>(context).searchNotes(pattern)),
           onLongPress: () {},
         ),
       ),

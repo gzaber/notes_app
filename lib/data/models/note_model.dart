@@ -16,7 +16,7 @@ class NoteModel extends Note {
     required String content,
   }) : super(
             id: const Uuid().v4(),
-            date: DateFormat('dd-MM-yyyy').format(DateTime.now()),
+            date: DateFormat('MMM dd, yyyy').format(DateTime.now()),
             title: title,
             content: content);
 
