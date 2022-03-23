@@ -23,12 +23,12 @@ https://dribbble.com/shots/11875872-A-simple-and-lightweight-note-app
 
 ## Screenshots
 
-[<img alt="Home screen" width="175px" src="_screenshots/home.png" />](_screenshots/home.png)
-[<img alt="Note screen" width="175px" src="_screenshots/note.png" />](_screenshots/note.png)
-[<img alt="Create note" width="175px" src="_screenshots/create.png" />](_screenshots/create.png)
-[<img alt="Update note" width="175px" src="_screenshots/update.png" />](_screenshots/update.png)
-[<img alt="Delete note" width="175px" src="_screenshots/delete.png" />](_screenshots/delete.png)
-[<img alt="Search note" width="175px" src="_screenshots/search.png" />](_screenshots/search.png)
+[<img alt="Home screen" width="200px" src="_screenshots/home.png" />](_screenshots/home.png)
+[<img alt="Note screen" width="200px" src="_screenshots/note.png" />](_screenshots/note.png)
+[<img alt="Create note" width="200px" src="_screenshots/create.png" />](_screenshots/create.png)
+[<img alt="Update note" width="200px" src="_screenshots/update.png" />](_screenshots/update.png)
+[<img alt="Delete note" width="200px" src="_screenshots/delete.png" />](_screenshots/delete.png)
+[<img alt="Search note" width="200px" src="_screenshots/search.png" />](_screenshots/search.png)
 
 ## Technologies
 
