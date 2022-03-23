@@ -1,16 +1,79 @@
 # notes_app
 
-A new Flutter project.
+A simple notes app based on following concept:  
+https://dribbble.com/shots/11875872-A-simple-and-lightweight-note-app
 
-## Getting Started
+## Table of contents
 
-This project is a starting point for a Flutter application.
+- [Features](#features)
+- [Screenshots](#screenshots)
+- [Technologies](#technologies)
+- [Setup](#setup)
+- [Launch](#launch)
+- [Test](#test)
+- [Inspiration](#inspiration)
 
-A few resources to get you started if this is your first Flutter project:
+## Features
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- Manage notes
+  - Create
+  - Update
+  - Delete
+- Search notes
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Screenshots
+
+[<img alt="Home screen" width="100px" src="_screenshots/home.png" />](_screenshots/home.png)
+[<img alt="Note screen" width="100px" src="_screenshots/note.png" />](_screenshots/note.png)
+[<img alt="Create note" width="100px" src="_screenshots/create.png" />](_screenshots/create.png)
+[<img alt="Update note" width="100px" src="_screenshots/update.png" />](_screenshots/update.png)
+[<img alt="Delete note" width="100px" src="_screenshots/delete.png" />](_screenshots/delete.png)
+[<img alt="Search note" width="100px" src="_screenshots/search.png" />](_screenshots/search.png)
+
+## Technologies
+
+- Dart
+- Flutter
+- SQLite
+
+## Setup
+
+Clone or download this repository.  
+Use the following command to install all the dependencies:
+
+```
+flutter pub get
+```
+
+Use the following command to update to the latest compatible versions of all the dependencies :
+
+```
+flutter pub upgrade
+```
+
+Use the following command to create platform-specific folders:
+
+```
+flutter create .
+```
+
+## Launch
+
+Run the application using your IDE or using the following command:
+
+```
+flutter run
+```
+
+## Test
+
+Run the tests using your IDE or using the following command:
+
+```
+flutter test
+```
+
+## Inspiration
+
+This application was based on [Amal](https://dribbble.com/amal) concept:  
+https://dribbble.com/shots/11875872-A-simple-and-lightweight-note-app
