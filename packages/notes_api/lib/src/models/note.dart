@@ -1,0 +1,29 @@
+import 'package:equatable/equatable.dart';
+import 'package:intl/intl.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:uuid/uuid.dart';
+
+part 'note.g.dart';
+
+@JsonSerializable()
+class Note extends Equatable {
+  Note({
+    String? id,
+    required this.title,
+    this.content = '',
+    String? date,
+  })  : id = id ?? Uuid().v4(),
+        date = date ?? DateFormat('MMM dd, yyyy').format(DateTime.now());
+
+  final String id;
+  final String title;
+  final String content;
+  final String date;
+
+  factory Note.fromJson(Map<String, dynamic> json) => _$NoteFromJson(json);
+
+  Map<String, dynamic> toJson() => _$NoteToJson(this);
+
+  @override
+  List<Object> get props => [id, title, content, date];
+}
