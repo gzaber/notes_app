@@ -1,62 +1,74 @@
 import 'package:notes_api/notes_api.dart';
-import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-class SqfliteNotesApi extends NotesApi {
-  SqfliteNotesApi._(this._db);
+class SqfliteNotesApi implements NotesApi {
+  const SqfliteNotesApi({
+    required Database database,
+    required String table,
+  })  : _db = database,
+        _table = table;
 
   final Database _db;
+  final String _table;
 
-  static openDb() async {
-    final databasePath = await getDatabasesPath();
-    final dbPath = join(databasePath, 'notes_app.db');
-
-    Database database = await openDatabase(
-      dbPath,
-      version: 1,
-      onCreate: (db, version) async {
-        await db.execute(
-          'CREATE TABLE notes(id TEXT PRIMARY KEY, title TEXT, content TEXT, date TEXT)',
-        );
-      },
+  @override
+  Future<void> addNote(Note note) async {
+    await _db.insert(
+      _table,
+      note.toJson(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
     );
-
-    return SqfliteNotesApi._(database);
   }
 
   @override
-  Future<void> addNote(Note note) {
-    // TODO: implement addNote
-    throw UnimplementedError();
+  Future<void> updateNote(Note note) async {
+    await _db.update(
+      _table,
+      note.toJson(),
+      where: 'id = ?',
+      whereArgs: [note.id],
+    );
   }
 
   @override
-  Future<void> deleteNote(String id) {
-    // TODO: implement deleteNote
-    throw UnimplementedError();
+  Future<void> deleteNote(String id) async {
+    await _db.delete(
+      _table,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
   }
 
   @override
-  Future<List<Note>> getAllNotes() {
-    // TODO: implement getAllNotes
-    throw UnimplementedError();
+  Future<List<Note>> getAllNotes() async {
+    final result = await _db.query(
+      _table,
+      orderBy: 'date DESC',
+    );
+    if (result.isEmpty) return [];
+    return result.map<Note>((map) => Note.fromJson(map)).toList();
   }
 
   @override
-  Future<Note?> getNote(String id) {
-    // TODO: implement getNote
-    throw UnimplementedError();
+  Future<Note?> getNote(String id) async {
+    final result = await _db.query(
+      _table,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    if (result.isEmpty) return null;
+    return Note.fromJson(result.first);
   }
 
   @override
-  Future<List<Note>> searchNotes(String pattern) {
-    // TODO: implement searchNotes
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> updateNote(Note note) {
-    // TODO: implement updateNote
-    throw UnimplementedError();
+  Future<List<Note>> searchNotes(String pattern) async {
+    var result = await _db.query(
+      _table,
+      where: 'title LIKE ? OR content LIKE ?',
+      whereArgs: ['%$pattern%'],
+      orderBy: 'date DESC',
+    );
+    if (result.isEmpty) return [];
+    return result.map<Note>((map) => Note.fromJson(map)).toList();
   }
 }
