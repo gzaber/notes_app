@@ -29,7 +29,7 @@ class NotesOverviewCubit extends Cubit<NotesOverviewState> {
     }
   }
 
-  void deleteNotes(String id) async {
+  void deleteNote(String id) async {
     emit(state.copyWith(status: NotesOverviewStatus.loading));
     try {
       await _notesRepository.deleteNote(id);
