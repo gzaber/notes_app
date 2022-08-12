@@ -3,6 +3,8 @@
 /web/
 /windows/
 
+coverage/
+
 # Miscellaneous
 *.class
 *.log
