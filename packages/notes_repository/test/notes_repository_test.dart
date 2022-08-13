@@ -18,7 +18,7 @@ void main() {
     setUp(() {
       notesApi = MockNotesApi();
 
-      when(() => notesApi.addNote(any())).thenAnswer((_) async {});
+      when(() => notesApi.createNote(any())).thenAnswer((_) async {});
       when(() => notesApi.updateNote(any())).thenAnswer((_) async {});
       when(() => notesApi.deleteNote(any())).thenAnswer((_) async {});
       when(() => notesApi.getAllNotes()).thenAnswer((_) async => [note]);
@@ -43,8 +43,8 @@ void main() {
       test('saves note using api', () {
         final sut = createRepository();
 
-        expect(sut.addNote(note), completes);
-        verify(() => notesApi.addNote(note)).called(1);
+        expect(sut.createNote(note), completes);
+        verify(() => notesApi.createNote(note)).called(1);
       });
     });
 
