@@ -50,12 +50,13 @@ class SqfliteNotesApi implements NotesApi {
   }
 
   @override
-  Future<Note> getNote(String id) async {
+  Future<Note?> getNote(String id) async {
     final result = await _db.query(
       _table,
       where: 'id = ?',
       whereArgs: [id],
     );
+    if (result.isEmpty) return null;
     return Note.fromJson(result.first);
   }
 
