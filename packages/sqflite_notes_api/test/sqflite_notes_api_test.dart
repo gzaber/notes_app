@@ -52,7 +52,7 @@ void main() {
     group('addNote', () {
       test('inserts note into database', () async {
         final sut = createApi();
-        await expectLater(sut.addNote(note), completes);
+        await expectLater(sut.createNote(note), completes);
 
         verify(() => db.insert(
               'notes',

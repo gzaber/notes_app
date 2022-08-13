@@ -12,7 +12,7 @@ class SqfliteNotesApi implements NotesApi {
   final String _table;
 
   @override
-  Future<void> addNote(Note note) async {
+  Future<void> createNote(Note note) async {
     await _db.insert(
       _table,
       note.toJson(),
