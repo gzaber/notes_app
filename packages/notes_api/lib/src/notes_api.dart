@@ -5,6 +5,6 @@ abstract class NotesApi {
   Future<void> updateNote(Note note);
   Future<void> deleteNote(String id);
   Future<List<Note>> getAllNotes();
-  Future<Note> getNote(String id);
+  Future<Note?> getNote(String id);
   Future<List<Note>> searchNotes(String pattern);
 }
