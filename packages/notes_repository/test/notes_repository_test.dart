@@ -79,7 +79,7 @@ void main() {
     });
 
     group('getNote', () {
-      test('get note by id using api', () async {
+      test('gets note by id using api', () async {
         final sut = createRepository();
 
         expect(
@@ -91,7 +91,7 @@ void main() {
     });
 
     group('searchNotes', () {
-      test('search notes using api', () async {
+      test('searches notes using api', () async {
         final sut = createRepository();
 
         expect(
