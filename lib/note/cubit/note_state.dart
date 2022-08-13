@@ -1,6 +1,6 @@
 part of 'note_cubit.dart';
 
-enum NoteStatus { loading, success, failure }
+enum NoteStatus { loading, success, notFound, failure }
 
 class NoteState extends Equatable {
   const NoteState({

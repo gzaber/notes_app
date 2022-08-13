@@ -13,6 +13,9 @@ class NoteCubit extends Cubit<NoteState> {
     emit(state.copyWith(status: NoteStatus.loading));
     try {
       final result = await _notesRepository.getNote(id);
+      if (result == null) {
+        emit(state.copyWith(status: NoteStatus.notFound));
+      }
       emit(
         state.copyWith(
           status: NoteStatus.success,
