@@ -12,7 +12,7 @@ class SqfliteNotesApi implements NotesApi {
   final String _table;
 
   @override
-  Future<void> addNote(Note note) async {
+  Future<void> createNote(Note note) async {
     await _db.insert(
       _table,
       note.toJson(),
@@ -50,13 +50,12 @@ class SqfliteNotesApi implements NotesApi {
   }
 
   @override
-  Future<Note?> getNote(String id) async {
+  Future<Note> getNote(String id) async {
     final result = await _db.query(
       _table,
       where: 'id = ?',
       whereArgs: [id],
     );
-    if (result.isEmpty) return null;
     return Note.fromJson(result.first);
   }
 

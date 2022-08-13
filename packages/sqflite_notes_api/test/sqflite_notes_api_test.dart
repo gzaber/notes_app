@@ -52,7 +52,7 @@ void main() {
     group('addNote', () {
       test('inserts note into database', () async {
         final sut = createApi();
-        await expectLater(sut.addNote(note), completes);
+        await expectLater(sut.createNote(note), completes);
 
         verify(() => db.insert(
               'notes',
@@ -130,24 +130,6 @@ void main() {
         final sut = createApi();
         final result = await sut.getNote(note.id);
         expect(result, equals(note));
-
-        verify(() => db.query(
-              'notes',
-              where: 'id = ?',
-              whereArgs: [note.id],
-            )).called(1);
-      });
-
-      test('returns null when note not found', () async {
-        when(() => db.query(
-              any(),
-              where: any(named: 'where'),
-              whereArgs: any(named: 'whereArgs'),
-            )).thenAnswer((_) async => []);
-
-        final sut = createApi();
-        final result = await sut.getNote(note.id);
-        expect(result, isNull);
 
         verify(() => db.query(
               'notes',
