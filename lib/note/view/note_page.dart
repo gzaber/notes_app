@@ -5,16 +5,15 @@ import 'package:notes_app/note/note.dart';
 import 'package:notes_repository/notes_repository.dart';
 
 class NotePage extends StatelessWidget {
-  const NotePage({Key? key, required this.id}) : super(key: key);
-
-  final String id;
+  const NotePage({Key? key}) : super(key: key);
 
   static Route route({required String id}) {
     return MaterialPageRoute(
       builder: (context) {
         return BlocProvider(
-          create: (context) => NoteCubit(context.read<NotesRepository>()),
-          child: NotePage(id: id),
+          create: (context) =>
+              NoteCubit(context.read<NotesRepository>())..getNote(id),
+          child: const NotePage(),
         );
       },
     );
@@ -27,7 +26,7 @@ class NotePage extends StatelessWidget {
         leadingWidth: kLeadingWidth,
         leading: CustomElevatedButton(
           icon: Icons.arrow_back_ios,
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => Navigator.of(context).pop<void>(),
         ),
         actions: [
           CustomElevatedButton(
