@@ -7,9 +7,11 @@ class CustomTextField extends StatelessWidget {
   final int maxLines;
   final TextInputAction textInputAction;
   final Function(String) onChanged;
+  final Key? textFieldKey;
 
   const CustomTextField({
     Key? key,
+    this.textFieldKey,
     required this.text,
     required this.hintText,
     required this.style,
@@ -21,6 +23,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      key: textFieldKey,
       controller: TextEditingController(text: text),
       cursorColor: Colors.white,
       keyboardType: TextInputType.multiline,
