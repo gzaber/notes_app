@@ -5,39 +5,48 @@ import 'package:notes_repository/notes_repository.dart';
 void main() {
   group('ManageNoteState', () {
     final note = Note(title: 'title');
-    ManageNoteState createState() => ManageNoteState(note: note);
+    ManageNoteState createState({Note? note}) => ManageNoteState(note: note);
 
     test('constructor works properly', () {
       expect(() => createState(), returnsNormally);
     });
 
     test('supports value equality', () {
-      expect(createState(), equals(createState()));
+      expect(createState(note: note), equals(createState(note: note)));
     });
 
     test('props are correct', () {
       expect(
-        createState().props,
-        equals([ManageNoteStatus.initial, note, '']),
+        createState(note: note).props,
+        equals([ManageNoteStatus.initial, ManageNoteMode.update, note, '']),
       );
     });
 
-    test('creates note when not provided', () {
-      expect(ManageNoteState().note, isA<Note>());
+    test('creates new note when note is not provided', () {
+      expect(createState().note, isA<Note>());
+    });
+
+    test('sets create mode when note is not provided', () {
+      expect(createState().mode, equals(ManageNoteMode.create));
+    });
+
+    test('sets update mode when note is provided', () {
+      expect(createState(note: note).mode, equals(ManageNoteMode.update));
     });
 
     group('copyWith', () {
       test('returns the same object if no arguments are provided', () {
         expect(
-          createState().copyWith(),
-          equals(createState()),
+          createState(note: note).copyWith(),
+          equals(createState(note: note)),
         );
       });
 
       test('retains old parameter value if null is provided', () {
         expect(
-          createState().copyWith(status: null, note: null, errorMessage: null),
-          equals(createState()),
+          createState(note: note)
+              .copyWith(status: null, note: null, errorMessage: null),
+          equals(createState(note: note)),
         );
       });
 
