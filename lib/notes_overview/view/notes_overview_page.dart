@@ -29,23 +29,8 @@ class NotesOverviewView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Notes'),
-        actions: [
-          CustomElevatedButton(
-            widget: const Icon(Icons.search, size: 30),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add, size: 30),
-        onPressed: () {
-          Navigator.of(context).push<void>(ManageNotePage.route()).whenComplete(
-              () => context.read<NotesOverviewCubit>().getNotes());
-        },
-      ),
+      appBar: const _SearchAppBar(),
+      floatingActionButton: const _FloatingActionButton(),
       body: BlocConsumer<NotesOverviewCubit, NotesOverviewState>(
         listener: (context, state) {
           if (state.status == NotesOverviewStatus.failure) {
@@ -67,11 +52,105 @@ class NotesOverviewView extends StatelessWidget {
           if (state.status == NotesOverviewStatus.success) {
             return _MasonryGridView(notes: state.notes);
           }
+          if (state.status == NotesOverviewStatus.search) {
+            return _MasonryGridView(notes: state.filteredNotes);
+          }
           return const SizedBox();
         },
       ),
     );
   }
+}
+
+class _FloatingActionButton extends StatelessWidget {
+  const _FloatingActionButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<NotesOverviewCubit, NotesOverviewState>(
+      builder: (context, state) {
+        if (state.status == NotesOverviewStatus.search) {
+          return const SizedBox();
+        }
+        return FloatingActionButton(
+          child: const Icon(Icons.add, size: 30),
+          onPressed: () {
+            Navigator.of(context)
+                .push<void>(ManageNotePage.route())
+                .whenComplete(
+                    () => context.read<NotesOverviewCubit>().getNotes());
+          },
+        );
+      },
+    );
+  }
+}
+
+class _SearchAppBar extends StatelessWidget with PreferredSizeWidget {
+  const _SearchAppBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<NotesOverviewCubit, NotesOverviewState>(
+      builder: (context, state) {
+        if (state.status == NotesOverviewStatus.search) {
+          final searchController = TextEditingController();
+          return AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back_ios, size: 30),
+              onPressed: () {
+                searchController.clear();
+                context.read<NotesOverviewCubit>().turnOffSearch();
+              },
+            ),
+            centerTitle: true,
+            title: SizedBox(
+              width: double.infinity,
+              child: TextField(
+                controller: searchController,
+                onChanged: ((text) {
+                  context.read<NotesOverviewCubit>().search(text);
+                }),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge!
+                    .copyWith(color: Colors.grey),
+                decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.clear, size: 30),
+                    onPressed: () {
+                      searchController.clear();
+                      context.read<NotesOverviewCubit>().clearSearch();
+                    },
+                  ),
+                  hintText: 'Search...',
+                  hintStyle: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(color: Colors.grey),
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+          );
+        }
+        return AppBar(
+          title: const Text('Notes'),
+          actions: [
+            CustomElevatedButton(
+              widget: const Icon(Icons.search, size: 30),
+              onPressed: () {
+                context.read<NotesOverviewCubit>().turnOnSearch();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size(double.infinity, kAppBarHeight);
 }
 
 class _MasonryGridView extends StatelessWidget {

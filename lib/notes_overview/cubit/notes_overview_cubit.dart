@@ -45,4 +45,33 @@ class NotesOverviewCubit extends Cubit<NotesOverviewState> {
       );
     }
   }
+
+  void turnOnSearch() {
+    emit(
+      state.copyWith(
+        status: NotesOverviewStatus.search,
+        filteredNotes: const [],
+      ),
+    );
+  }
+
+  void turnOffSearch() {
+    emit(
+      state.copyWith(
+        status: NotesOverviewStatus.success,
+      ),
+    );
+  }
+
+  void search(String pattern) {
+    final filteredList = state.notes
+        .where(
+            (note) => note.title.toLowerCase().contains(pattern.toLowerCase()))
+        .toList();
+    emit(state.copyWith(filteredNotes: filteredList));
+  }
+
+  void clearSearch() {
+    emit(state.copyWith(filteredNotes: const []));
+  }
 }
