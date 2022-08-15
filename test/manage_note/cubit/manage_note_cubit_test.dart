@@ -21,7 +21,7 @@ void main() {
       registerFallbackValue(FakeNote());
     });
 
-    ManageNoteCubit createCubit() =>
+    ManageNoteCubit createCubit({Note? note}) =>
         ManageNoteCubit(notesRepository: notesRepository, note: note);
 
     group('constructor', () {
@@ -30,26 +30,22 @@ void main() {
       });
 
       test('initial state is correct', () {
-        expect(createCubit().state, equals(ManageNoteState(note: note)));
+        expect(
+          createCubit(note: note).state,
+          equals(createCubit(note: note).state),
+        );
       });
     });
 
     group('onTitleChanged', () {
       blocTest<ManageNoteCubit, ManageNoteState>(
-        'emits state with empty status when title is empty',
-        build: () => createCubit(),
-        act: (cubit) => cubit.onTitleChanged(''),
-        expect: () =>
-            [ManageNoteState(status: ManageNoteStatus.empty, note: note)],
-      );
-
-      blocTest<ManageNoteCubit, ManageNoteState>(
         'emits state with initial status and changed note title',
-        build: () => createCubit(),
+        build: () => createCubit(note: note),
         act: (cubit) => cubit.onTitleChanged('changed title'),
         expect: () => [
           ManageNoteState(
               status: ManageNoteStatus.initial,
+              mode: ManageNoteMode.update,
               note: note.copyWith(title: 'changed title'))
         ],
       );
@@ -58,11 +54,12 @@ void main() {
     group('onContentChanged', () {
       blocTest<ManageNoteCubit, ManageNoteState>(
         'emits state with initial status and changed note content',
-        build: () => createCubit(),
+        build: () => createCubit(note: note),
         act: (cubit) => cubit.onContentChanged('changed content'),
         expect: () => [
           ManageNoteState(
               status: ManageNoteStatus.initial,
+              mode: ManageNoteMode.update,
               note: note.copyWith(content: 'changed content'))
         ],
       );
@@ -70,16 +67,37 @@ void main() {
 
     group('createNote', () {
       blocTest<ManageNoteCubit, ManageNoteState>(
+        'emits state with empty status when title is empty',
+        build: () => createCubit(),
+        seed: () =>
+            createCubit().state.copyWith(note: note.copyWith(title: '')),
+        act: (cubit) => cubit.createNote(),
+        expect: () => [
+          ManageNoteState(
+              status: ManageNoteStatus.empty,
+              mode: ManageNoteMode.create,
+              note: note.copyWith(title: ''))
+        ],
+      );
+
+      blocTest<ManageNoteCubit, ManageNoteState>(
         'emits state with success status when creates note successfully',
         setUp: () {
           when(() => notesRepository.createNote(any()))
               .thenAnswer((_) async {});
         },
         build: () => createCubit(),
+        seed: () => createCubit().state.copyWith(note: note),
         act: (cubit) => cubit.createNote(),
         expect: () => [
-          ManageNoteState(status: ManageNoteStatus.loading, note: note),
-          ManageNoteState(status: ManageNoteStatus.success, note: note),
+          ManageNoteState(
+              status: ManageNoteStatus.loading,
+              mode: ManageNoteMode.create,
+              note: note),
+          ManageNoteState(
+              status: ManageNoteStatus.success,
+              mode: ManageNoteMode.create,
+              note: note),
         ],
         verify: (_) {
           verify(() => notesRepository.createNote(note)).called(1);
@@ -93,11 +111,16 @@ void main() {
               .thenThrow(Exception('error'));
         },
         build: () => createCubit(),
+        seed: () => createCubit().state.copyWith(note: note),
         act: (cubit) => cubit.createNote(),
         expect: () => [
-          ManageNoteState(status: ManageNoteStatus.loading, note: note),
+          ManageNoteState(
+              status: ManageNoteStatus.loading,
+              mode: ManageNoteMode.create,
+              note: note),
           ManageNoteState(
               status: ManageNoteStatus.failure,
+              mode: ManageNoteMode.create,
               note: note,
               errorMessage: 'Exception: error'),
         ],
@@ -109,16 +132,38 @@ void main() {
 
     group('updateNote', () {
       blocTest<ManageNoteCubit, ManageNoteState>(
+        'emits state with empty status when title is empty',
+        build: () => createCubit(note: note),
+        seed: () => createCubit(note: note)
+            .state
+            .copyWith(note: note.copyWith(title: '')),
+        act: (cubit) => cubit.updateNote(),
+        expect: () => [
+          ManageNoteState(
+              status: ManageNoteStatus.empty,
+              mode: ManageNoteMode.update,
+              note: note.copyWith(title: ''))
+        ],
+      );
+
+      blocTest<ManageNoteCubit, ManageNoteState>(
         'emits state with success status when updates note successfully',
         setUp: () {
           when(() => notesRepository.updateNote(any()))
               .thenAnswer((_) async {});
         },
-        build: () => createCubit(),
+        build: () => createCubit(note: note),
+        seed: () => createCubit(note: note).state,
         act: (cubit) => cubit.updateNote(),
         expect: () => [
-          ManageNoteState(status: ManageNoteStatus.loading, note: note),
-          ManageNoteState(status: ManageNoteStatus.success, note: note),
+          ManageNoteState(
+              status: ManageNoteStatus.loading,
+              mode: ManageNoteMode.update,
+              note: note),
+          ManageNoteState(
+              status: ManageNoteStatus.success,
+              mode: ManageNoteMode.update,
+              note: note),
         ],
         verify: (_) {
           verify(() => notesRepository.updateNote(note)).called(1);
@@ -131,12 +176,14 @@ void main() {
           when(() => notesRepository.updateNote(any()))
               .thenThrow(Exception('error'));
         },
-        build: () => createCubit(),
+        build: () => createCubit(note: note),
+        seed: () => createCubit(note: note).state,
         act: (cubit) => cubit.updateNote(),
         expect: () => [
           ManageNoteState(status: ManageNoteStatus.loading, note: note),
           ManageNoteState(
               status: ManageNoteStatus.failure,
+              mode: ManageNoteMode.update,
               note: note,
               errorMessage: 'Exception: error'),
         ],
