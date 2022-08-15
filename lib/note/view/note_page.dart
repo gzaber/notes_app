@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notes_app/common/common.dart';
+import 'package:notes_app/manage_note/manage_note.dart';
 import 'package:notes_app/note/note.dart';
 import 'package:notes_repository/notes_repository.dart';
 
@@ -31,7 +32,16 @@ class NotePage extends StatelessWidget {
         actions: [
           CustomElevatedButton(
             icon: Icons.edit,
-            onPressed: () {},
+            onPressed: () {
+              if (context.read<NoteCubit>().state.note != null) {
+                Navigator.of(context)
+                    .push(ManageNotePage.route(
+                        note: context.read<NoteCubit>().state.note))
+                    .whenComplete(() => context
+                        .read<NoteCubit>()
+                        .getNote(context.read<NoteCubit>().state.note!.id));
+              }
+            },
           ),
         ],
       ),
