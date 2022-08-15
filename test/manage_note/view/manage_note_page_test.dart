@@ -147,8 +147,7 @@ void main() {
       );
     });
 
-    testWidgets('renders AppBar with 2 ElevatedButtons with icons',
-        (tester) async {
+    testWidgets('renders AppBar with 2 ElevatedButtons', (tester) async {
       when(() => manageNoteCubit.state).thenReturn(ManageNoteState());
 
       await tester.pumpManageNotePage(manageNoteCubit: manageNoteCubit);
@@ -159,7 +158,7 @@ void main() {
         findsNWidgets(2),
       );
       expect(find.byIcon(Icons.arrow_back_ios), findsOneWidget);
-      expect(find.byIcon(Icons.save), findsOneWidget);
+      expect(find.text('Save'), findsOneWidget);
     });
 
     testWidgets('invokes cubit method when title changes', (tester) async {
@@ -192,7 +191,7 @@ void main() {
       );
 
       await tester.pumpManageNotePage(manageNoteCubit: manageNoteCubit);
-      await tester.tap(find.byIcon(Icons.save));
+      await tester.tap(find.text('Save'));
 
       verify(() => manageNoteCubit.createNote()).called(1);
     });
@@ -203,7 +202,7 @@ void main() {
       );
 
       await tester.pumpManageNotePage(manageNoteCubit: manageNoteCubit);
-      await tester.tap(find.byIcon(Icons.save));
+      await tester.tap(find.text('Save'));
 
       verify(() => manageNoteCubit.updateNote()).called(1);
     });
