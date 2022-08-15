@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  final String text;
+  const CustomTextField({
+    Key? key,
+    this.textFieldKey,
+    required this.controller,
+    required this.hintText,
+    required this.style,
+    required this.maxLines,
+    this.textInputAction = TextInputAction.newline,
+    required this.onChanged,
+  }) : super(key: key);
+
+  final Key? textFieldKey;
+  final TextEditingController controller;
   final String hintText;
   final TextStyle style;
   final int maxLines;
   final TextInputAction textInputAction;
   final Function(String) onChanged;
-  final Key? textFieldKey;
-
-  const CustomTextField({
-    Key? key,
-    this.textFieldKey,
-    required this.text,
-    required this.hintText,
-    required this.style,
-    required this.maxLines,
-    required this.onChanged,
-    this.textInputAction = TextInputAction.newline,
-  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       key: textFieldKey,
-      controller: TextEditingController(text: text),
+      controller: controller,
       cursorColor: Colors.white,
       keyboardType: TextInputType.multiline,
       textInputAction: textInputAction,
