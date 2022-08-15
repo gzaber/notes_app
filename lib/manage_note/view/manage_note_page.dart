@@ -25,12 +25,16 @@ class ManageNotePage extends StatelessWidget {
         appBar: AppBar(
           leadingWidth: kLeadingWidth,
           leading: CustomElevatedButton(
-            icon: Icons.arrow_back_ios,
+            widget: const Icon(Icons.arrow_back_ios, size: 30),
             onPressed: () => Navigator.of(context).pop<void>(),
           ),
           actions: [
             CustomElevatedButton(
-              icon: Icons.save,
+              widget: Text('Save',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(color: Colors.white)),
               onPressed: () {
                 if (context.read<ManageNoteCubit>().state.mode ==
                     ManageNoteMode.create) {
@@ -72,10 +76,7 @@ class ManageNotePage extends StatelessWidget {
                 child: CircularProgressIndicator(color: Colors.white),
               );
             }
-            return _NoteForm(
-              title: state.note.title,
-              content: state.note.content,
-            );
+            return const _NoteForm();
           },
         ));
   }
@@ -84,12 +85,7 @@ class ManageNotePage extends StatelessWidget {
 class _NoteForm extends StatelessWidget {
   const _NoteForm({
     Key? key,
-    required this.title,
-    required this.content,
   }) : super(key: key);
-
-  final String title;
-  final String content;
 
   @override
   Widget build(BuildContext context) {
@@ -100,8 +96,10 @@ class _NoteForm extends StatelessWidget {
         children: [
           CustomTextField(
             textFieldKey: const Key('manageNotePage_title_TextField'),
-            text: title,
+            controller: TextEditingController(
+                text: context.read<ManageNoteCubit>().state.note.title),
             hintText: 'Title',
+            textInputAction: TextInputAction.next,
             style: Theme.of(context)
                 .textTheme
                 .headlineMedium!
@@ -113,7 +111,8 @@ class _NoteForm extends StatelessWidget {
           ),
           CustomTextField(
             textFieldKey: const Key('manageNotePage_content_TextField'),
-            text: content,
+            controller: TextEditingController(
+                text: context.read<ManageNoteCubit>().state.note.content),
             hintText: 'Type something...',
             style: Theme.of(context)
                 .textTheme

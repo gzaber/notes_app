@@ -26,12 +26,12 @@ class NotePage extends StatelessWidget {
       appBar: AppBar(
         leadingWidth: kLeadingWidth,
         leading: CustomElevatedButton(
-          icon: Icons.arrow_back_ios,
+          widget: const Icon(Icons.arrow_back_ios, size: 30),
           onPressed: () => Navigator.of(context).pop<void>(),
         ),
         actions: [
           CustomElevatedButton(
-            icon: Icons.edit,
+            widget: const Icon(Icons.edit, size: 30),
             onPressed: () {
               if (context.read<NoteCubit>().state.note != null) {
                 Navigator.of(context)
