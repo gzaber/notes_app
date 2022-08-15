@@ -7,10 +7,12 @@ enum ManageNoteMode { create, update }
 class ManageNoteState extends Equatable {
   ManageNoteState({
     this.status = ManageNoteStatus.initial,
+    ManageNoteMode? mode,
     Note? note,
     this.errorMessage = '',
   })  : note = note ?? Note(title: ''),
-        mode = note == null ? ManageNoteMode.create : ManageNoteMode.update;
+        mode = mode ??
+            (note == null ? ManageNoteMode.create : ManageNoteMode.update);
 
   final ManageNoteStatus status;
   final ManageNoteMode mode;
@@ -22,11 +24,13 @@ class ManageNoteState extends Equatable {
 
   ManageNoteState copyWith({
     ManageNoteStatus? status,
+    ManageNoteMode? mode,
     Note? note,
     String? errorMessage,
   }) {
     return ManageNoteState(
       status: status ?? this.status,
+      mode: mode ?? this.mode,
       note: note ?? this.note,
       errorMessage: errorMessage ?? this.errorMessage,
     );
