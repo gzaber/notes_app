@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-const double kSidePadding = 20.0;
-const double kLeadingWidth = 105.0;
+const double kSidePadding = 20;
+const double kLeadingWidth = 105;
+const double kAppBarHeight = 80;
 const Color kButtonColor = Color(0xff3b3b3b);
 const List<Color> colorPalette = [
   Color(0xffff8a80),
