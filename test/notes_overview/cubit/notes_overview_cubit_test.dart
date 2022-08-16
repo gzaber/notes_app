@@ -106,5 +106,68 @@ void main() {
         },
       );
     });
+
+    group('turnOnSearch', () {
+      blocTest<NotesOverviewCubit, NotesOverviewState>(
+        'emits state with search status and empty filtered notes list',
+        build: () => createCubit(),
+        act: (cubit) => cubit.turnOnSearch(),
+        expect: () => [
+          const NotesOverviewState(
+              status: NotesOverviewStatus.search, filteredNotes: []),
+        ],
+      );
+    });
+
+    group('turnOffSearch', () {
+      blocTest<NotesOverviewCubit, NotesOverviewState>(
+        'emits state with success status',
+        build: () => createCubit(),
+        act: (cubit) => cubit.turnOffSearch(),
+        expect: () => [
+          const NotesOverviewState(status: NotesOverviewStatus.success),
+        ],
+      );
+    });
+
+    group('search', () {
+      final note1 = Note(title: 'title1');
+      final note2 = Note(title: 'title2');
+      blocTest<NotesOverviewCubit, NotesOverviewState>(
+        'emits state with search result',
+        build: () => createCubit(),
+        seed: () => createCubit().state.copyWith(
+            status: NotesOverviewStatus.search, notes: [note1, note2]),
+        act: (cubit) => cubit.search('le2'),
+        expect: () => [
+          NotesOverviewState(
+            status: NotesOverviewStatus.search,
+            notes: [note1, note2],
+            filteredNotes: [note2],
+          ),
+        ],
+      );
+    });
+
+    group('clearSearch', () {
+      final note1 = Note(title: 'title1');
+      final note2 = Note(title: 'title2');
+      blocTest<NotesOverviewCubit, NotesOverviewState>(
+        'emits state with empty filtered notes list',
+        build: () => createCubit(),
+        seed: () => createCubit().state.copyWith(
+            status: NotesOverviewStatus.search,
+            notes: [note1, note2],
+            filteredNotes: [note1]),
+        act: (cubit) => cubit.clearSearch(),
+        expect: () => [
+          NotesOverviewState(
+            status: NotesOverviewStatus.search,
+            notes: [note1, note2],
+            filteredNotes: const [],
+          ),
+        ],
+      );
+    });
   });
 }
