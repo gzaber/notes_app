@@ -8,15 +8,18 @@ class ManageNotePage extends StatelessWidget {
   const ManageNotePage({Key? key}) : super(key: key);
 
   static Route route({Note? note}) {
-    return MaterialPageRoute(builder: (context) {
-      return BlocProvider(
-        create: (context) => ManageNoteCubit(
-          notesRepository: context.read<NotesRepository>(),
-          note: note,
-        ),
-        child: const ManageNotePage(),
-      );
-    });
+    return MaterialPageRoute(
+      builder: (context) {
+        return BlocProvider(
+          create: (context) => ManageNoteCubit(
+            notesRepository: context.read<NotesRepository>(),
+            note: note,
+          ),
+          child: const ManageNotePage(),
+        );
+      },
+      settings: const RouteSettings(name: '/manage'),
+    );
   }
 
   @override
