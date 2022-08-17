@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockingjay/mockingjay.dart';
-import 'package:notes_app/manage_note/manage_note.dart';
 import 'package:notes_app/note/note.dart';
 import 'package:notes_repository/notes_repository.dart';
 
