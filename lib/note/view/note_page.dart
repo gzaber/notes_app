@@ -17,6 +17,7 @@ class NotePage extends StatelessWidget {
           child: const NotePage(),
         );
       },
+      settings: const RouteSettings(name: '/note'),
     );
   }
 
