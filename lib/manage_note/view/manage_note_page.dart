@@ -8,15 +8,18 @@ class ManageNotePage extends StatelessWidget {
   const ManageNotePage({Key? key}) : super(key: key);
 
   static Route route({Note? note}) {
-    return MaterialPageRoute(builder: (context) {
-      return BlocProvider(
-        create: (context) => ManageNoteCubit(
-          notesRepository: context.read<NotesRepository>(),
-          note: note,
-        ),
-        child: const ManageNotePage(),
-      );
-    });
+    return MaterialPageRoute(
+      builder: (context) {
+        return BlocProvider(
+          create: (context) => ManageNoteCubit(
+            notesRepository: context.read<NotesRepository>(),
+            note: note,
+          ),
+          child: const ManageNotePage(),
+        );
+      },
+      settings: const RouteSettings(name: '/manage'),
+    );
   }
 
   @override
@@ -25,12 +28,16 @@ class ManageNotePage extends StatelessWidget {
         appBar: AppBar(
           leadingWidth: kLeadingWidth,
           leading: CustomElevatedButton(
-            icon: Icons.arrow_back_ios,
+            widget: const Icon(Icons.arrow_back_ios, size: 30),
             onPressed: () => Navigator.of(context).pop<void>(),
           ),
           actions: [
             CustomElevatedButton(
-              icon: Icons.save,
+              widget: Text('Save',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(color: Colors.white)),
               onPressed: () {
                 if (context.read<ManageNoteCubit>().state.mode ==
                     ManageNoteMode.create) {
@@ -72,24 +79,14 @@ class ManageNotePage extends StatelessWidget {
                 child: CircularProgressIndicator(color: Colors.white),
               );
             }
-            return _NoteForm(
-              title: state.note.title,
-              content: state.note.content,
-            );
+            return const _NoteForm();
           },
         ));
   }
 }
 
 class _NoteForm extends StatelessWidget {
-  const _NoteForm({
-    Key? key,
-    required this.title,
-    required this.content,
-  }) : super(key: key);
-
-  final String title;
-  final String content;
+  const _NoteForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -98,27 +95,53 @@ class _NoteForm extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomTextField(
-            textFieldKey: const Key('manageNotePage_title_TextField'),
-            text: title,
-            hintText: 'Title',
+          TextField(
+            key: const Key('manageNotePage_title_TextField'),
+            controller: TextEditingController(
+                text: context.read<ManageNoteCubit>().state.note.title),
+            cursorColor: Colors.white,
+            keyboardType: TextInputType.multiline,
+            textInputAction: TextInputAction.next,
+            decoration: InputDecoration(
+              hintText: 'Title',
+              focusedBorder: const UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white)),
+              hintStyle: Theme.of(context)
+                  .textTheme
+                  .headlineMedium!
+                  .copyWith(color: Colors.grey),
+            ),
             style: Theme.of(context)
                 .textTheme
                 .headlineMedium!
                 .copyWith(color: Colors.grey),
+            minLines: 1,
             maxLines: 3,
             onChanged: (val) {
               context.read<ManageNoteCubit>().onTitleChanged(val);
             },
           ),
-          CustomTextField(
-            textFieldKey: const Key('manageNotePage_content_TextField'),
-            text: content,
-            hintText: 'Type something...',
+          TextField(
+            key: const Key('manageNotePage_content_TextField'),
+            controller: TextEditingController(
+                text: context.read<ManageNoteCubit>().state.note.content),
+            cursorColor: Colors.white,
+            keyboardType: TextInputType.multiline,
+            textInputAction: TextInputAction.newline,
+            decoration: InputDecoration(
+              hintText: 'Type sometthing...',
+              focusedBorder: const UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white)),
+              hintStyle: Theme.of(context)
+                  .textTheme
+                  .headlineMedium!
+                  .copyWith(color: Colors.grey),
+            ),
             style: Theme.of(context)
                 .textTheme
-                .headlineSmall!
+                .headlineMedium!
                 .copyWith(color: Colors.grey),
+            minLines: 1,
             maxLines: 15,
             onChanged: (val) {
               context.read<ManageNoteCubit>().onContentChanged(val);

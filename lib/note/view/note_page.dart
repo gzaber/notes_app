@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notes_app/common/common.dart';
+import 'package:notes_app/manage_note/manage_note.dart';
 import 'package:notes_app/note/note.dart';
 import 'package:notes_repository/notes_repository.dart';
 
@@ -16,6 +17,7 @@ class NotePage extends StatelessWidget {
           child: const NotePage(),
         );
       },
+      settings: const RouteSettings(name: '/note'),
     );
   }
 
@@ -25,13 +27,22 @@ class NotePage extends StatelessWidget {
       appBar: AppBar(
         leadingWidth: kLeadingWidth,
         leading: CustomElevatedButton(
-          icon: Icons.arrow_back_ios,
+          widget: const Icon(Icons.arrow_back_ios, size: 30),
           onPressed: () => Navigator.of(context).pop<void>(),
         ),
         actions: [
           CustomElevatedButton(
-            icon: Icons.edit,
-            onPressed: () {},
+            widget: const Icon(Icons.edit, size: 30),
+            onPressed: () {
+              if (context.read<NoteCubit>().state.note != null) {
+                Navigator.of(context)
+                    .push<void>(ManageNotePage.route(
+                        note: context.read<NoteCubit>().state.note))
+                    .then((_) => context
+                        .read<NoteCubit>()
+                        .getNote(context.read<NoteCubit>().state.note!.id));
+              }
+            },
           ),
         ],
       ),

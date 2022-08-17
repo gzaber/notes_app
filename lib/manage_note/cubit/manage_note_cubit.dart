@@ -14,10 +14,6 @@ class ManageNoteCubit extends Cubit<ManageNoteState> {
   final NotesRepository _notesRepository;
 
   void onTitleChanged(String title) {
-    if (title.isEmpty) {
-      emit(state.copyWith(status: ManageNoteStatus.empty));
-      return;
-    }
     final note = state.note.copyWith(title: title);
     emit(
       state.copyWith(
@@ -38,6 +34,10 @@ class ManageNoteCubit extends Cubit<ManageNoteState> {
   }
 
   void createNote() async {
+    if (state.note.title.isEmpty) {
+      emit(state.copyWith(status: ManageNoteStatus.empty));
+      return;
+    }
     emit(state.copyWith(status: ManageNoteStatus.loading));
     try {
       await _notesRepository.createNote(state.note);
@@ -51,6 +51,10 @@ class ManageNoteCubit extends Cubit<ManageNoteState> {
   }
 
   void updateNote() async {
+    if (state.note.title.isEmpty) {
+      emit(state.copyWith(status: ManageNoteStatus.empty));
+      return;
+    }
     emit(state.copyWith(status: ManageNoteStatus.loading));
     try {
       await _notesRepository.updateNote(state.note);

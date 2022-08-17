@@ -34,8 +34,8 @@ class AppView extends StatelessWidget {
         primaryColor: Colors.black,
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.black,
-          toolbarHeight: 80.0,
-          elevation: 0.0,
+          toolbarHeight: kAppBarHeight,
+          elevation: 0,
           centerTitle: false,
           titleTextStyle: Theme.of(context)
               .textTheme

@@ -1,41 +1,25 @@
 import 'package:flutter/material.dart';
-
-import 'composition_root.dart';
-import 'presentation/helpers/colors.dart';
+import 'package:notes_app/app/app.dart';
+import 'package:notes_repository/notes_repository.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_notes_api/sqflite_notes_api.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await CompositionRoot.configure();
+  final database = await openDatabase(
+    join(await getDatabasesPath(), 'notes.db'),
+    version: 1,
+    onCreate: (db, version) async {
+      await db.execute(
+        'CREATE TABLE notes(id TEXT PRIMARY KEY,title TEXT,content TEXT,date TEXT)',
+      );
+    },
+  );
+  final sqfliteNotesApi = SqfliteNotesApi(database: database, table: 'notes');
+  final notesRepository = NotesRepository(notesApi: sqfliteNotesApi);
 
   runApp(
-    MyApp(startPage: CompositionRoot.composeHomePage()),
+    App(notesRepository: notesRepository),
   );
-}
-
-class MyApp extends StatelessWidget {
-  final Widget startPage;
-  const MyApp({Key? key, required this.startPage}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Notes App',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        primaryColor: Colors.black,
-        appBarTheme: AppBarTheme(
-          backgroundColor: Colors.black,
-          toolbarHeight: 80.0,
-          elevation: 0.0,
-          centerTitle: false,
-          titleTextStyle: Theme.of(context).textTheme.headlineLarge!.copyWith(color: Colors.white),
-        ),
-        scaffoldBackgroundColor: Colors.black,
-        floatingActionButtonTheme:
-            const FloatingActionButtonThemeData(backgroundColor: kButtonColor),
-      ),
-      home: startPage,
-    );
-  }
 }

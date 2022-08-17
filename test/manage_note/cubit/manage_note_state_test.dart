@@ -44,8 +44,12 @@ void main() {
 
       test('retains old parameter value if null is provided', () {
         expect(
-          createState(note: note)
-              .copyWith(status: null, note: null, errorMessage: null),
+          createState(note: note).copyWith(
+            status: null,
+            mode: null,
+            note: null,
+            errorMessage: null,
+          ),
           equals(createState(note: note)),
         );
       });
@@ -54,12 +58,14 @@ void main() {
         expect(
           createState().copyWith(
             status: ManageNoteStatus.failure,
+            mode: ManageNoteMode.update,
             note: note,
             errorMessage: 'failure',
           ),
           equals(
             ManageNoteState(
               status: ManageNoteStatus.failure,
+              mode: ManageNoteMode.update,
               note: note,
               errorMessage: 'failure',
             ),

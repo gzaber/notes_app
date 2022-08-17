@@ -144,7 +144,9 @@ void main() {
           value: noteCubit,
           child: MaterialApp(
             home: MockNavigatorProvider(
-                navigator: navigator, child: const NotePage()),
+              navigator: navigator,
+              child: const NotePage(),
+            ),
           ),
         ),
       );
@@ -152,6 +154,35 @@ void main() {
       await tester.tap(find.byIcon(Icons.arrow_back_ios));
 
       verify(() => navigator.pop<void>()).called(1);
+    });
+
+    testWidgets('routes to ManageNotePage when edit button is tapped',
+        (tester) async {
+      final navigator = MockNavigator();
+      when(() => navigator.push<void>(any())).thenAnswer((_) async {});
+
+      when(() => noteCubit.state)
+          .thenReturn(NoteState(status: NoteStatus.success, note: note));
+
+      await tester.pumpWidget(
+        BlocProvider.value(
+          value: noteCubit,
+          child: MaterialApp(
+            home: MockNavigatorProvider(
+              navigator: navigator,
+              child: const NotePage(),
+            ),
+          ),
+        ),
+      );
+
+      await tester.tap(find.byIcon(Icons.edit));
+
+      verify(
+        () => navigator.push<void>(
+          any(that: isRoute<void>(whereName: equals('/manage'))),
+        ),
+      ).called(1);
     });
   });
 }

@@ -19,7 +19,7 @@ void main() {
     test('props are correct', () {
       expect(
         createState().props,
-        equals([NotesOverviewStatus.loading, [], '']),
+        equals([NotesOverviewStatus.loading, [], [], '']),
       );
     });
 
@@ -33,7 +33,11 @@ void main() {
 
       test('retains old parameter value if null is provided', () {
         expect(
-          createState().copyWith(status: null, notes: null, errorMessage: null),
+          createState().copyWith(
+              status: null,
+              notes: null,
+              filteredNotes: null,
+              errorMessage: null),
           equals(createState()),
         );
       });
@@ -43,12 +47,14 @@ void main() {
           createState().copyWith(
             status: NotesOverviewStatus.failure,
             notes: [note],
+            filteredNotes: [note],
             errorMessage: 'failure',
           ),
           equals(
             NotesOverviewState(
               status: NotesOverviewStatus.failure,
               notes: [note],
+              filteredNotes: [note],
               errorMessage: 'failure',
             ),
           ),
