@@ -38,7 +38,7 @@ class NotePage extends StatelessWidget {
                 Navigator.of(context)
                     .push<void>(ManageNotePage.route(
                         note: context.read<NoteCubit>().state.note))
-                    .whenComplete(() => context
+                    .then((_) => context
                         .read<NoteCubit>()
                         .getNote(context.read<NoteCubit>().state.note!.id));
               }

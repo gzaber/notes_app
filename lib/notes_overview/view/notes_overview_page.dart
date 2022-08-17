@@ -77,8 +77,7 @@ class _FloatingActionButton extends StatelessWidget {
           onPressed: () {
             Navigator.of(context)
                 .push<void>(ManageNotePage.route())
-                .whenComplete(
-                    () => context.read<NotesOverviewCubit>().getNotes());
+                .then((_) => context.read<NotesOverviewCubit>().getNotes());
           },
         );
       },
@@ -176,16 +175,14 @@ class _MasonryGridView extends StatelessWidget {
           onTap: () {
             Navigator.of(context)
                 .push<void>(NotePage.route(id: notes[index].id))
-                .whenComplete(
-                    () => context.read<NotesOverviewCubit>().getNotes());
+                .then((_) => context.read<NotesOverviewCubit>().getNotes());
           },
           onLongPress: () {
             showDialog(
                     context: context,
                     builder: (_) =>
                         _DeleteDialog(context: context, id: notes[index].id))
-                .whenComplete(
-                    () => context.read<NotesOverviewCubit>().getNotes());
+                .then((_) => context.read<NotesOverviewCubit>().getNotes());
           },
         );
       },
