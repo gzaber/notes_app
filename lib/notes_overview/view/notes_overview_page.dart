@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:intl/intl.dart';
 import 'package:notes_app/common/common.dart';
 import 'package:notes_app/manage_note/manage_note.dart';
 import 'package:notes_app/note/note.dart';
@@ -230,7 +231,9 @@ class _NoteCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 10.0),
                 Text(
-                  note.date,
+                  DateFormat('MMM dd, yyyy',
+                          AppLocalizations.of(context)!.localeName)
+                      .format(DateTime.parse(note.date)),
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium!
