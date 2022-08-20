@@ -14,8 +14,6 @@ void main() {
         Note(id: 'id1', title: 'title1', content: 'content1', date: '2022');
     final note2 =
         Note(id: 'id2', title: 'title2', content: 'content2', date: '2022');
-    final note22 =
-        Note(id: 'id22', title: 'title22', content: 'content22', date: '2022');
 
     SqfliteNotesApi createApi() =>
         SqfliteNotesApi(database: db, table: 'notes');
@@ -153,68 +151,6 @@ void main() {
               'notes',
               where: 'id = ?',
               whereArgs: [note.id],
-            )).called(1);
-      });
-    });
-
-    group('searchNotes', () {
-      test('returns notes when title contains pattern', () async {
-        when(() => db.query(
-              any(),
-              where: any(named: 'where'),
-              whereArgs: any(named: 'whereArgs'),
-              orderBy: any(named: 'orderBy'),
-            )).thenAnswer((_) async => [note2.toJson(), note22.toJson()]);
-
-        final sut = createApi();
-        final result = await sut.searchNotes('tle2');
-        expect(result, equals([note2, note22]));
-
-        verify(() => db.query(
-              'notes',
-              where: 'title LIKE ? OR content LIKE ?',
-              whereArgs: ['%tle2%'],
-              orderBy: 'date DESC',
-            )).called(1);
-      });
-
-      test('returns notes when content contains pattern', () async {
-        when(() => db.query(
-              any(),
-              where: any(named: 'where'),
-              whereArgs: any(named: 'whereArgs'),
-              orderBy: any(named: 'orderBy'),
-            )).thenAnswer((_) async => [note2.toJson(), note22.toJson()]);
-
-        final sut = createApi();
-        final result = await sut.searchNotes('tent2');
-        expect(result, equals([note2, note22]));
-
-        verify(() => db.query(
-              'notes',
-              where: 'title LIKE ? OR content LIKE ?',
-              whereArgs: ['%tent2%'],
-              orderBy: 'date DESC',
-            )).called(1);
-      });
-
-      test('returns empty list when no notes found', () async {
-        when(() => db.query(
-              any(),
-              where: any(named: 'where'),
-              whereArgs: any(named: 'whereArgs'),
-              orderBy: any(named: 'orderBy'),
-            )).thenAnswer((_) async => []);
-
-        final sut = createApi();
-        final result = await sut.searchNotes('lol');
-        expect(result, equals([]));
-
-        verify(() => db.query(
-              'notes',
-              where: 'title LIKE ? OR content LIKE ?',
-              whereArgs: ['%lol%'],
-              orderBy: 'date DESC',
             )).called(1);
       });
     });

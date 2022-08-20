@@ -12,6 +12,4 @@ class NotesRepository {
   Future<void> deleteNote(String id) async => await _notesApi.deleteNote(id);
   Future<List<Note>> getAllNotes() async => await _notesApi.getAllNotes();
   Future<Note?> getNote(String id) async => await _notesApi.getNote(id);
-  Future<List<Note>> searchNotes(String pattern) async =>
-      await _notesApi.searchNotes(pattern);
 }

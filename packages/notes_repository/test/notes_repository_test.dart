@@ -23,7 +23,6 @@ void main() {
       when(() => notesApi.deleteNote(any())).thenAnswer((_) async {});
       when(() => notesApi.getAllNotes()).thenAnswer((_) async => [note]);
       when(() => notesApi.getNote(any())).thenAnswer((_) async => note);
-      when(() => notesApi.searchNotes(any())).thenAnswer((_) async => [note]);
     });
 
     setUpAll(() {
@@ -87,18 +86,6 @@ void main() {
           equals(note),
         );
         verify(() => notesApi.getNote(note.id)).called(1);
-      });
-    });
-
-    group('searchNotes', () {
-      test('searches notes using api', () async {
-        final sut = createRepository();
-
-        expect(
-          await sut.searchNotes('tle'),
-          equals([note]),
-        );
-        verify(() => notesApi.searchNotes('tle')).called(1);
       });
     });
   });

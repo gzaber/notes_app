@@ -6,5 +6,4 @@ abstract class NotesApi {
   Future<void> deleteNote(String id);
   Future<List<Note>> getAllNotes();
   Future<Note?> getNote(String id);
-  Future<List<Note>> searchNotes(String pattern);
 }

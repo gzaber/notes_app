@@ -59,16 +59,4 @@ class SqfliteNotesApi implements NotesApi {
     if (result.isEmpty) return null;
     return Note.fromJson(result.first);
   }
-
-  @override
-  Future<List<Note>> searchNotes(String pattern) async {
-    var result = await _db.query(
-      _table,
-      where: 'title LIKE ? OR content LIKE ?',
-      whereArgs: ['%$pattern%'],
-      orderBy: 'date DESC',
-    );
-    if (result.isEmpty) return [];
-    return result.map<Note>((map) => Note.fromJson(map)).toList();
-  }
 }
