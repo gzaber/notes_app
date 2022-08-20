@@ -1,7 +1,9 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockingjay/mockingjay.dart';
 import 'package:notes_app/note/note.dart';
 import 'package:notes_repository/notes_repository.dart';
@@ -14,6 +16,7 @@ extension PumpView on WidgetTester {
       BlocProvider.value(
         value: noteCubit,
         child: const MaterialApp(
+          localizationsDelegates: [AppLocalizations.delegate],
           home: NotePage(),
         ),
       ),
@@ -30,11 +33,12 @@ void main() {
     late NotesRepository notesRepository;
     late NoteCubit noteCubit;
 
-    final note = Note(title: 'title', content: 'content', date: '2022');
+    final note = Note(title: 'title', content: 'content', date: '2022-08-20');
 
     setUp(() {
       notesRepository = MockNotesRepository();
       noteCubit = MockNoteCubit();
+      initializeDateFormatting();
     });
 
     testWidgets('is routable', (tester) async {
@@ -42,6 +46,7 @@ void main() {
         RepositoryProvider.value(
           value: notesRepository,
           child: MaterialApp(
+            localizationsDelegates: const [AppLocalizations.delegate],
             home: Builder(
               builder: (context) => Scaffold(
                 floatingActionButton: FloatingActionButton(
@@ -89,7 +94,7 @@ void main() {
       await tester.pumpNotePage(noteCubit: noteCubit);
 
       expect(find.text(note.title), findsOneWidget);
-      expect(find.text(note.date), findsOneWidget);
+      expect(find.text('Aug 20, 2022'), findsOneWidget);
       expect(find.text(note.content), findsOneWidget);
     });
 
@@ -143,6 +148,7 @@ void main() {
         BlocProvider.value(
           value: noteCubit,
           child: MaterialApp(
+            localizationsDelegates: const [AppLocalizations.delegate],
             home: MockNavigatorProvider(
               navigator: navigator,
               child: const NotePage(),
@@ -168,6 +174,7 @@ void main() {
         BlocProvider.value(
           value: noteCubit,
           child: MaterialApp(
+            localizationsDelegates: const [AppLocalizations.delegate],
             home: MockNavigatorProvider(
               navigator: navigator,
               child: const NotePage(),

@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:mockingjay/mockingjay.dart';
 import 'package:notes_app/notes_overview/notes_overview.dart';
 import 'package:notes_repository/notes_repository.dart';
@@ -55,9 +56,12 @@ void main() {
 
   group('NotesOverviewView', () {
     late NotesOverviewCubit notesOverviewCubit;
+    final note1 = Note(title: 'title1', date: '2022-08-15');
+    final note2 = Note(title: 'title2', date: '2022-08-20');
 
     setUp(() {
       notesOverviewCubit = MockNotesOverviewCubit();
+      initializeDateFormatting();
     });
 
     testWidgets('renders CircularProgressIndicator when data is loading',
@@ -75,8 +79,6 @@ void main() {
     testWidgets(
         'renders MasonryGridView with notes when data is loaded successfully',
         (tester) async {
-      final note1 = Note(title: 'title1', date: '2021');
-      final note2 = Note(title: 'title2', date: '2022');
       when(() => notesOverviewCubit.state).thenReturn(
         NotesOverviewState(
           status: NotesOverviewStatus.success,
@@ -90,14 +92,12 @@ void main() {
       expect(find.byType(MasonryGridView), findsOneWidget);
       expect(find.text(note1.title), findsOneWidget);
       expect(find.text(note2.title), findsOneWidget);
-      expect(find.text(note1.date), findsOneWidget);
-      expect(find.text(note2.date), findsOneWidget);
+      expect(find.text('Aug 15, 2022'), findsOneWidget);
+      expect(find.text('Aug 20, 2022'), findsOneWidget);
     });
 
     testWidgets('renders MasonryGridView with notes when search notes',
         (tester) async {
-      final note1 = Note(title: 'title1', date: '2021');
-      final note2 = Note(title: 'title2', date: '2022');
       when(() => notesOverviewCubit.state).thenReturn(
         NotesOverviewState(
           status: NotesOverviewStatus.search,
@@ -111,8 +111,8 @@ void main() {
       expect(find.byType(MasonryGridView), findsOneWidget);
       expect(find.text(note1.title), findsOneWidget);
       expect(find.text(note2.title), findsOneWidget);
-      expect(find.text(note1.date), findsOneWidget);
-      expect(find.text(note2.date), findsOneWidget);
+      expect(find.text('Aug 15, 2022'), findsOneWidget);
+      expect(find.text('Aug 20, 2022'), findsOneWidget);
     });
 
     testWidgets('shows SnackBar with error text when error occurs',
@@ -206,16 +206,15 @@ void main() {
 
     testWidgets('shows SimpleDialog with delete icon when note is long pressed',
         (tester) async {
-      final note = Note(title: 'title', date: '202');
-
       when(() => notesOverviewCubit.state).thenReturn(
-        NotesOverviewState(status: NotesOverviewStatus.success, notes: [note]),
+        NotesOverviewState(
+            status: NotesOverviewStatus.success, notes: [note1, note2]),
       );
 
       await tester.pumpNotesOverviewView(
           notesOverviewCubit: notesOverviewCubit);
 
-      await tester.longPress(find.text(note.title));
+      await tester.longPress(find.text(note1.title));
 
       expect(find.byType(SimpleDialog), findsOneWidget);
       expect(
@@ -228,11 +227,11 @@ void main() {
     testWidgets(
         'performs note delete, pops SimpleDialog and getting all notes '
         'when SimpleDialogOption is tapped', (tester) async {
-      final note = Note(title: 'title', date: '2022');
       final navigator = MockNavigator();
       when(() => navigator.pop<void>()).thenAnswer((_) async {});
       when(() => notesOverviewCubit.state).thenReturn(
-        NotesOverviewState(status: NotesOverviewStatus.success, notes: [note]),
+        NotesOverviewState(
+            status: NotesOverviewStatus.success, notes: [note1, note2]),
       );
 
       await tester.pumpWidget(
@@ -248,11 +247,11 @@ void main() {
         ),
       );
 
-      await tester.longPress(find.text(note.title));
+      await tester.longPress(find.text(note1.title));
       await tester.tap(find.byType(SimpleDialogOption));
 
       verify(() => navigator.pop<void>()).called(1);
-      verify(() => notesOverviewCubit.deleteNote(note.id)).called(1);
+      verify(() => notesOverviewCubit.deleteNote(note1.id)).called(1);
     });
 
     testWidgets('performs turn on search when search button is tapped',
@@ -309,8 +308,6 @@ void main() {
 
     testWidgets('routes to ManageNotePage when FloatingActionButton is tapped',
         (tester) async {
-      final note1 = Note(title: 'title1', date: '2021');
-      final note2 = Note(title: 'title2', date: '2022');
       final navigator = MockNavigator();
       when(() => navigator.push<void>(any())).thenAnswer((_) async {});
       when(() => notesOverviewCubit.state).thenReturn(NotesOverviewState(
@@ -339,8 +336,6 @@ void main() {
     });
 
     testWidgets('routes to NotePage when note card is tapped', (tester) async {
-      final note1 = Note(title: 'title1', date: '2021');
-      final note2 = Note(title: 'title2', date: '2022');
       final navigator = MockNavigator();
       when(() => navigator.push<void>(any())).thenAnswer((_) async {});
       when(() => notesOverviewCubit.state).thenReturn(NotesOverviewState(
