@@ -2,11 +2,8 @@
   "files.exclude": {
     ".dart_tool": true,
     ".idea": true,
-    "android": true,
-    "ios": true,
     ".metadata": true,
     ".packages": true,
-    "analysis_options.yaml": true,
     "notes_app.iml": true,
     "pubspec.lock": true,
     "build": true,
