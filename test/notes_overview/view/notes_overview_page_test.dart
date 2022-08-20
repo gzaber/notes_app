@@ -1,6 +1,8 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockingjay/mockingjay.dart';
@@ -15,6 +17,7 @@ extension PumpView on WidgetTester {
       BlocProvider.value(
         value: notesOverviewCubit,
         child: const MaterialApp(
+          localizationsDelegates: [AppLocalizations.delegate],
           home: NotesOverviewView(),
         ),
       ),
@@ -40,6 +43,7 @@ void main() {
         RepositoryProvider.value(
           value: notesRepository,
           child: const MaterialApp(
+            localizationsDelegates: [AppLocalizations.delegate],
             home: NotesOverviewPage(),
           ),
         ),
@@ -145,7 +149,9 @@ void main() {
 
       expect(find.byType(AppBar), findsOneWidget);
       expect(
-        find.descendant(of: find.byType(AppBar), matching: find.text('Notes')),
+        find.descendant(
+            of: find.byType(AppBar),
+            matching: find.text(AppLocalizationsEn().notesAppBarTitle)),
         findsOneWidget,
       );
       expect(
@@ -233,6 +239,7 @@ void main() {
         BlocProvider.value(
           value: notesOverviewCubit,
           child: MaterialApp(
+            localizationsDelegates: const [AppLocalizations.delegate],
             home: MockNavigatorProvider(
               navigator: navigator,
               child: const NotesOverviewView(),
@@ -246,8 +253,6 @@ void main() {
 
       verify(() => navigator.pop<void>()).called(1);
       verify(() => notesOverviewCubit.deleteNote(note.id)).called(1);
-
-      // verify(() => notesOverviewCubit.getNotes()).called(1);
     });
 
     testWidgets('performs turn on search when search button is tapped',
@@ -315,6 +320,7 @@ void main() {
         BlocProvider.value(
           value: notesOverviewCubit,
           child: MaterialApp(
+            localizationsDelegates: const [AppLocalizations.delegate],
             home: MockNavigatorProvider(
               navigator: navigator,
               child: const NotesOverviewView(),
@@ -344,6 +350,7 @@ void main() {
         BlocProvider.value(
           value: notesOverviewCubit,
           child: MaterialApp(
+            localizationsDelegates: const [AppLocalizations.delegate],
             home: MockNavigatorProvider(
               navigator: navigator,
               child: const NotesOverviewView(),
