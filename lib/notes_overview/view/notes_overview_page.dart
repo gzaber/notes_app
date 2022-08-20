@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:notes_app/common/common.dart';
 import 'package:notes_app/manage_note/manage_note.dart';
@@ -122,7 +123,7 @@ class _SearchAppBar extends StatelessWidget with PreferredSizeWidget {
                       context.read<NotesOverviewCubit>().clearSearch();
                     },
                   ),
-                  hintText: 'Search...',
+                  hintText: AppLocalizations.of(context)!.searchNotesHintText,
                   hintStyle: Theme.of(context)
                       .textTheme
                       .titleLarge!
@@ -134,7 +135,7 @@ class _SearchAppBar extends StatelessWidget with PreferredSizeWidget {
           );
         }
         return AppBar(
-          title: const Text('Notes'),
+          title: Text(AppLocalizations.of(context)!.notesAppBarTitle),
           actions: [
             CustomElevatedButton(
               widget: const Icon(Icons.search, size: 30),
