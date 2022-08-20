@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:intl/intl.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:uuid/uuid.dart';
 
@@ -13,7 +12,7 @@ class Note extends Equatable {
     this.content = '',
     String? date,
   })  : id = id ?? Uuid().v4(),
-        date = date ?? DateFormat('MMM dd, yyyy').format(DateTime.now());
+        date = date ?? DateTime.now().toIso8601String();
 
   final String id;
   final String title;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:notes_app/common/common.dart';
 import 'package:notes_app/manage_note/manage_note.dart';
 import 'package:notes_repository/notes_repository.dart';
@@ -33,7 +34,7 @@ class ManageNotePage extends StatelessWidget {
           ),
           actions: [
             CustomElevatedButton(
-              widget: Text('Save',
+              widget: Text(AppLocalizations.of(context)!.saveButtonText,
                   style: Theme.of(context)
                       .textTheme
                       .titleLarge!
@@ -55,8 +56,10 @@ class ManageNotePage extends StatelessWidget {
               ScaffoldMessenger.of(context)
                 ..removeCurrentSnackBar()
                 ..showSnackBar(
-                  const SnackBar(
-                    content: SnackBarMessage(message: 'Title cannot be empty'),
+                  SnackBar(
+                    content: SnackBarMessage(
+                        message: AppLocalizations.of(context)!
+                            .emptyTitleErrorMessage),
                   ),
                 );
             }
@@ -103,7 +106,7 @@ class _NoteForm extends StatelessWidget {
             keyboardType: TextInputType.multiline,
             textInputAction: TextInputAction.next,
             decoration: InputDecoration(
-              hintText: 'Title',
+              hintText: AppLocalizations.of(context)!.noteTitleHintText,
               focusedBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.white)),
               hintStyle: Theme.of(context)
@@ -129,7 +132,7 @@ class _NoteForm extends StatelessWidget {
             keyboardType: TextInputType.multiline,
             textInputAction: TextInputAction.newline,
             decoration: InputDecoration(
-              hintText: 'Type sometthing...',
+              hintText: AppLocalizations.of(context)!.noteContentHintText,
               focusedBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.white)),
               hintStyle: Theme.of(context)

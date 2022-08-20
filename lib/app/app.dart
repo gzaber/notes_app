@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:notes_app/common/common.dart';
 import 'package:notes_app/notes_overview/notes_overview.dart';
 import 'package:notes_repository/notes_repository.dart';
@@ -27,8 +28,10 @@ class AppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Notes App',
+      title: 'NotesApp',
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
         primaryColor: Colors.black,

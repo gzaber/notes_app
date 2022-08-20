@@ -1,6 +1,8 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockingjay/mockingjay.dart';
 import 'package:notes_app/manage_note/manage_note.dart';
@@ -15,6 +17,7 @@ extension PumpView on WidgetTester {
       BlocProvider.value(
         value: manageNoteCubit,
         child: const MaterialApp(
+          localizationsDelegates: [AppLocalizations.delegate],
           home: ManageNotePage(),
         ),
       ),
@@ -44,6 +47,7 @@ void main() {
         RepositoryProvider.value(
           value: notesRepository,
           child: MaterialApp(
+            localizationsDelegates: const [AppLocalizations.delegate],
             home: Builder(
               builder: (context) => Scaffold(
                 floatingActionButton: FloatingActionButton(
@@ -120,7 +124,7 @@ void main() {
       expect(
         find.descendant(
             of: find.byType(SnackBar),
-            matching: find.text('Title cannot be empty')),
+            matching: find.text(AppLocalizationsEn().emptyTitleErrorMessage)),
         findsOneWidget,
       );
     });
@@ -158,7 +162,7 @@ void main() {
         findsNWidgets(2),
       );
       expect(find.byIcon(Icons.arrow_back_ios), findsOneWidget);
-      expect(find.text('Save'), findsOneWidget);
+      expect(find.text(AppLocalizationsEn().saveButtonText), findsOneWidget);
     });
 
     testWidgets('invokes cubit method when title changes', (tester) async {
@@ -191,7 +195,7 @@ void main() {
       );
 
       await tester.pumpManageNotePage(manageNoteCubit: manageNoteCubit);
-      await tester.tap(find.text('Save'));
+      await tester.tap(find.text(AppLocalizationsEn().saveButtonText));
 
       verify(() => manageNoteCubit.createNote()).called(1);
     });
@@ -202,7 +206,7 @@ void main() {
       );
 
       await tester.pumpManageNotePage(manageNoteCubit: manageNoteCubit);
-      await tester.tap(find.text('Save'));
+      await tester.tap(find.text(AppLocalizationsEn().saveButtonText));
 
       verify(() => manageNoteCubit.updateNote()).called(1);
     });
@@ -222,6 +226,7 @@ void main() {
         BlocProvider.value(
           value: manageNoteCubit,
           child: MaterialApp(
+            localizationsDelegates: const [AppLocalizations.delegate],
             home: MockNavigatorProvider(
               navigator: navigator,
               child: const ManageNotePage(),
@@ -244,6 +249,7 @@ void main() {
         BlocProvider.value(
           value: manageNoteCubit,
           child: MaterialApp(
+            localizationsDelegates: const [AppLocalizations.delegate],
             home: MockNavigatorProvider(
               navigator: navigator,
               child: const ManageNotePage(),
