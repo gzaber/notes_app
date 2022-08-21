@@ -133,6 +133,25 @@ void main() {
     group('search', () {
       final note1 = Note(title: 'title1');
       final note2 = Note(title: 'title2');
+
+      blocTest<NotesOverviewCubit, NotesOverviewState>(
+        'emits state with empty search result when pattern is empty',
+        build: () => createCubit(),
+        seed: () => createCubit().state.copyWith(
+          status: NotesOverviewStatus.search,
+          notes: [note1, note2],
+          filteredNotes: [note1],
+        ),
+        act: (cubit) => cubit.search(''),
+        expect: () => [
+          NotesOverviewState(
+            status: NotesOverviewStatus.search,
+            notes: [note1, note2],
+            filteredNotes: const [],
+          ),
+        ],
+      );
+
       blocTest<NotesOverviewCubit, NotesOverviewState>(
         'emits state with search result',
         build: () => createCubit(),

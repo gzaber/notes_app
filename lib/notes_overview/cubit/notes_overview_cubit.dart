@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notes_repository/notes_repository.dart';
 
 part 'notes_overview_state.dart';
@@ -64,6 +64,10 @@ class NotesOverviewCubit extends Cubit<NotesOverviewState> {
   }
 
   void search(String pattern) {
+    if (pattern.isEmpty) {
+      emit(state.copyWith(filteredNotes: const []));
+      return;
+    }
     final filteredList = state.notes
         .where(
             (note) => note.title.toLowerCase().contains(pattern.toLowerCase()))

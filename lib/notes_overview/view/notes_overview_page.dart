@@ -92,10 +92,10 @@ class _SearchAppBar extends StatelessWidget with PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final searchController = TextEditingController();
     return BlocBuilder<NotesOverviewCubit, NotesOverviewState>(
       builder: (context, state) {
         if (state.status == NotesOverviewStatus.search) {
-          final searchController = TextEditingController();
           return AppBar(
             leading: IconButton(
               icon: const Icon(Icons.arrow_back_ios, size: 30),
@@ -135,6 +135,7 @@ class _SearchAppBar extends StatelessWidget with PreferredSizeWidget {
             ),
           );
         }
+        searchController.clear();
         return AppBar(
           title: Text(AppLocalizations.of(context)!.notesAppBarTitle),
           actions: [
