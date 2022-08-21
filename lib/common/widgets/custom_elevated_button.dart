@@ -18,12 +18,12 @@ class CustomElevatedButton extends StatelessWidget {
           const EdgeInsets.fromLTRB(kSidePadding, 16.0, kSidePadding, 16.0),
       child: ElevatedButton(
         onPressed: onPressed,
-        child: widget,
         style: ElevatedButton.styleFrom(
           primary: kButtonColor,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         ),
+        child: widget,
       ),
     );
   }
