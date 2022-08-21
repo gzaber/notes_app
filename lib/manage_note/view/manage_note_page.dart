@@ -137,12 +137,12 @@ class _NoteForm extends StatelessWidget {
                   borderSide: BorderSide(color: Colors.white)),
               hintStyle: Theme.of(context)
                   .textTheme
-                  .headlineMedium!
+                  .headlineSmall!
                   .copyWith(color: Colors.grey),
             ),
             style: Theme.of(context)
                 .textTheme
-                .headlineMedium!
+                .headlineSmall!
                 .copyWith(color: Colors.grey),
             minLines: 1,
             maxLines: 15,
