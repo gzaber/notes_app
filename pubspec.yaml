@@ -23,7 +23,6 @@ dependencies:
   path_provider: ^2.0.11
   sqflite_notes_api:
     path: packages/sqflite_notes_api
-  uuid: ^3.0.6
 
 dev_dependencies:
   flutter_test:
