@@ -145,7 +145,7 @@ class _NoteForm extends StatelessWidget {
                 .headlineSmall!
                 .copyWith(color: Colors.grey),
             minLines: 1,
-            maxLines: 15,
+            maxLines: 20,
             onChanged: (val) {
               context.read<ManageNoteCubit>().onContentChanged(val);
             },
