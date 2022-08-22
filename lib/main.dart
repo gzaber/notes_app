@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:notes_app/app/app.dart';
 import 'package:notes_repository/notes_repository.dart';
 import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_notes_api/sqflite_notes_api.dart';
 
 void main() async {

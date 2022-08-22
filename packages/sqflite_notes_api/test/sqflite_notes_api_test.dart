@@ -1,6 +1,5 @@
 import 'package:mocktail/mocktail.dart';
 import 'package:notes_api/notes_api.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_notes_api/sqflite_notes_api.dart';
 import 'package:test/test.dart';
 

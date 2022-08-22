@@ -12,10 +12,9 @@ class SnackBarMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       message,
-      style: Theme.of(context)
-          .textTheme
-          .titleMedium!
-          .copyWith(color: Colors.white),
+      style: Theme.of(context).textTheme.titleLarge!.copyWith(
+            color: Colors.white,
+          ),
     );
   }
 }
