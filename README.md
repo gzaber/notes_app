@@ -18,7 +18,7 @@ https://dribbble.com/shots/11875872-A-simple-and-lightweight-note-app
 
 ## Screenshots
 
-[<img alt="Notes overview page" width="200px" src=".screenshots/notes_overview.png" />](_screenshots/notes_overview.png)
+[<img alt="Notes overview page" width="200px" src=".screenshots/notes_overview.png" />](.screenshots/notes_overview.png)
 [<img alt="Note page" width="200px" src=".screenshots/note.png" />](.screenshots/note.png)
 [<img alt="Create note" width="200px" src=".screenshots/manage_note_create.png" />](.screenshots/manage_note_create.png)
 [<img alt="Update note" width="200px" src=".screenshots/manage_note_update.png" />](.screenshots/manage_note_update.png)
