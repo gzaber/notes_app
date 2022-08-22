@@ -1,3 +1,7 @@
+<a href="https://github.com/gzaber/notes_app/actions"><img src="https://img.shields.io/github/workflow/status/gzaber/notes_app/main" alt="build"></a>
+<a href="https://codecov.io/gh/gzaber/notes_app"><img src="https://codecov.io/gh/gzaber/notes_app/branch/master/graph/badge.svg" alt="codecov"></a>
+<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/github/license/gzaber/notes_app" alt="license MIT"></a>
+
 # notes_app
 
 A simple notes app based on following concept:  
@@ -5,36 +9,38 @@ https://dribbble.com/shots/11875872-A-simple-and-lightweight-note-app
 
 ## Table of contents
 
-- [Features](#features)
 - [Screenshots](#screenshots)
-- [Technologies](#technologies)
+- [Features](#features)
+- [Packages used](#packages-used)
 - [Setup](#setup)
-- [Launch](#launch)
 - [Test](#test)
-- [Inspiration](#inspiration)
-
-## Features
-
-- Manage notes
-  - Create
-  - Update
-  - Delete
-- Search notes
+- [Run](#run)
 
 ## Screenshots
 
-[<img alt="Home screen" width="200px" src="_screenshots/home.png" />](_screenshots/home.png)
-[<img alt="Note screen" width="200px" src="_screenshots/note.png" />](_screenshots/note.png)
-[<img alt="Create note" width="200px" src="_screenshots/create.png" />](_screenshots/create.png)
-[<img alt="Update note" width="200px" src="_screenshots/update.png" />](_screenshots/update.png)
-[<img alt="Delete note" width="200px" src="_screenshots/delete.png" />](_screenshots/delete.png)
-[<img alt="Search note" width="200px" src="_screenshots/search.png" />](_screenshots/search.png)
+[<img alt="Notes overview page" width="200px" src=".screenshots/notes_overview.png" />](_screenshots/notes_overview.png)
+[<img alt="Note page" width="200px" src=".screenshots/note.png" />](.screenshots/note.png)
+[<img alt="Create note" width="200px" src=".screenshots/manage_note_create.png" />](.screenshots/manage_note_create.png)
+[<img alt="Update note" width="200px" src=".screenshots/manage_note_update.png" />](.screenshots/manage_note_update.png)
+[<img alt="Search note" width="200px" src=".screenshots/search.png" />](.screenshots/search.png)
+[<img alt="Delete note" width="200px" src=".screenshots/delete.png" />](.screenshots/delete.png)
+[<img alt="Empty title error" width="200px" src=".screenshots/manage_note_error.png" />](.screenshots/manage_note_error.png)
 
-## Technologies
+## Features
 
-- Dart
-- Flutter
-- SQLite
+- create, update, delete note
+- search notes by title
+- supported locales: en, pl
+
+## Packages used
+
+- equatable
+- flutter_bloc
+- flutter_staggered_grid_view
+- intl
+- json_annotation
+- sqflite
+- uuid
 
 ## Setup
 
@@ -42,27 +48,7 @@ Clone or download this repository.
 Use the following command to install all the dependencies:
 
 ```
-flutter pub get
-```
-
-Use the following command to update to the latest compatible versions of all the dependencies :
-
-```
-flutter pub upgrade
-```
-
-Use the following command to create platform-specific folders:
-
-```
-flutter create .
-```
-
-## Launch
-
-Run the application using your IDE or using the following command:
-
-```
-flutter run
+$ flutter pub get
 ```
 
 ## Test
@@ -70,10 +56,15 @@ flutter run
 Run the tests using your IDE or using the following command:
 
 ```
-flutter test
+$ flutter test --coverage
 ```
 
-## Inspiration
+For local packages run above command in package root directory.
 
-This application was based on [Amal](https://dribbble.com/amal) concept:  
-https://dribbble.com/shots/11875872-A-simple-and-lightweight-note-app
+## Run
+
+Run the application using your IDE or using the following command:
+
+```
+$ flutter run
+```
