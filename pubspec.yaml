@@ -21,7 +21,6 @@ dependencies:
     path: packages/notes_repository
   path: ^1.8.1
   path_provider: ^2.0.11
-  sqflite: ^2.0.2
   sqflite_notes_api:
     path: packages/sqflite_notes_api
   uuid: ^3.0.6
