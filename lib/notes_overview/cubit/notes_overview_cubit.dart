@@ -64,13 +64,13 @@ class NotesOverviewCubit extends Cubit<NotesOverviewState> {
   }
 
   void search(String pattern) {
-    if (pattern.isEmpty) {
+    if (pattern.trim().isEmpty) {
       emit(state.copyWith(filteredNotes: const []));
       return;
     }
     final filteredList = state.notes
-        .where(
-            (note) => note.title.toLowerCase().contains(pattern.toLowerCase()))
+        .where((note) =>
+            note.title.toLowerCase().contains(pattern.toLowerCase().trim()))
         .toList();
     emit(state.copyWith(filteredNotes: filteredList));
   }
