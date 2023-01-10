@@ -1,4 +1,4 @@
-<a href="https://github.com/gzaber/notes_app/actions"><img src="https://img.shields.io/github/workflow/status/gzaber/notes_app/main" alt="build"></a>
+<a href="https://github.com/gzaber/notes_app/actions"><img src="https://img.shields.io/github/actions/workflow/status/gzaber/notes_app/main.yaml" alt="build"></a>
 <a href="https://codecov.io/gh/gzaber/notes_app"><img src="https://codecov.io/gh/gzaber/notes_app/branch/master/graph/badge.svg" alt="codecov"></a>
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/github/license/gzaber/notes_app" alt="license MIT"></a>
 
