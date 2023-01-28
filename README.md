@@ -4,7 +4,7 @@
 
 # notes_app
 
-A simple notes app based on following concept:  
+A simple notes app based on the following concept:  
 https://dribbble.com/shots/11875872-A-simple-and-lightweight-note-app
 
 ## Table of contents
@@ -18,13 +18,17 @@ https://dribbble.com/shots/11875872-A-simple-and-lightweight-note-app
 
 ## Screenshots
 
-[<img alt="Notes overview page" width="200px" src=".screenshots/notes_overview.png" />](.screenshots/notes_overview.png)
-[<img alt="Note page" width="200px" src=".screenshots/note.png" />](.screenshots/note.png)
-[<img alt="Create note" width="200px" src=".screenshots/manage_note_create.png" />](.screenshots/manage_note_create.png)
-[<img alt="Update note" width="200px" src=".screenshots/manage_note_update.png" />](.screenshots/manage_note_update.png)
-[<img alt="Search note" width="200px" src=".screenshots/search.png" />](.screenshots/search.png)
-[<img alt="Delete note" width="200px" src=".screenshots/delete.png" />](.screenshots/delete.png)
-[<img alt="Empty title error" width="200px" src=".screenshots/manage_note_error.png" />](.screenshots/manage_note_error.png)
+[<img alt="notes overview page" width="250px" src=".screenshots/notes_overview_page.png" />](.screenshots/notes_overview_page.png)
+&nbsp;
+[<img alt="note page" width="250px" src=".screenshots/note_page.png" />](.screenshots/note_page.png)
+&nbsp;
+[<img alt="search notes" width="250px" src=".screenshots/search_notes.png" />](.screenshots/search_notes.png)
+
+[<img alt="notes overview recording" width="250px" src=".screenshots/recording1.gif" />](.screenshots/recording1.gif)
+&nbsp;
+[<img alt="update note recording" width="250px" src=".screenshots/recording2.gif" />](.screenshots/recording2.gif)
+&nbsp;
+[<img alt="search notes recording" width="250px" src=".screenshots/recording3.gif" />](.screenshots/recording3.gif)
 
 ## Features
 
@@ -34,10 +38,7 @@ https://dribbble.com/shots/11875872-A-simple-and-lightweight-note-app
 
 ## Packages used
 
-- equatable
-- flutter_bloc
-- flutter_staggered_grid_view
-- intl
+- bloc
 - json_annotation
 - sqflite
 - uuid
@@ -59,7 +60,13 @@ Run the tests using your IDE or using the following command:
 $ flutter test --coverage
 ```
 
-For local packages run above command in package root directory.
+For local Flutter packages run the above command in the package root directory.  
+For local Dart packages run the following commands in the package root directory:
+
+```
+$ dart pub global activate coverage
+$ dart pub global run coverage:test_with_coverage
+```
 
 ## Run
 
