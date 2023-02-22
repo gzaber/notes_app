@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SnackBarMessage extends StatelessWidget {
-  const SnackBarMessage({
-    Key? key,
-    required this.message,
-  }) : super(key: key);
+  const SnackBarMessage({Key? key, required this.message}) : super(key: key);
 
   final String message;
 

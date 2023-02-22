@@ -1,7 +1,7 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:notes_app/common/common.dart';
 import 'package:notes_app/manage_note/manage_note.dart';
 import 'package:notes_repository/notes_repository.dart';
 
@@ -27,7 +27,7 @@ class ManageNotePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leadingWidth: kLeadingWidth,
+          leadingWidth: AppDimensions.leadingWidth,
           leading: CustomElevatedButton(
             widget: const Icon(Icons.arrow_back_ios, size: 30),
             onPressed: () => Navigator.of(context).pop<void>(),
@@ -94,7 +94,7 @@ class _NoteForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: kSidePadding),
+      padding: EdgeInsets.symmetric(horizontal: AppDimensions.sidePadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
