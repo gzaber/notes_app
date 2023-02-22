@@ -1,7 +1,7 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:notes_app/common/common.dart';
 import 'package:notes_app/notes_overview/notes_overview.dart';
 import 'package:notes_repository/notes_repository.dart';
 
@@ -32,23 +32,7 @@ class AppView extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      theme: ThemeData(
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        primaryColor: Colors.black,
-        appBarTheme: AppBarTheme(
-          backgroundColor: Colors.black,
-          toolbarHeight: kAppBarHeight,
-          elevation: 0,
-          centerTitle: false,
-          titleTextStyle: Theme.of(context)
-              .textTheme
-              .headlineLarge!
-              .copyWith(color: Colors.white),
-        ),
-        scaffoldBackgroundColor: Colors.black,
-        floatingActionButtonTheme:
-            const FloatingActionButtonThemeData(backgroundColor: kButtonColor),
-      ),
+      theme: AppTheme.theme,
       home: const NotesOverviewPage(),
     );
   }

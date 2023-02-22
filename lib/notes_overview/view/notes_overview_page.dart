@@ -1,11 +1,11 @@
 import 'dart:math';
 
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:intl/intl.dart';
-import 'package:notes_app/common/common.dart';
 import 'package:notes_app/manage_note/manage_note.dart';
 import 'package:notes_app/note/note.dart';
 import 'package:notes_app/notes_overview/cubit/notes_overview_cubit.dart';
@@ -152,7 +152,7 @@ class _SearchAppBar extends StatelessWidget with PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size(double.infinity, kAppBarHeight);
+  Size get preferredSize => Size(double.infinity, AppDimensions.appBarHeight);
 }
 
 class _MasonryGridView extends StatelessWidget {
@@ -170,11 +170,12 @@ class _MasonryGridView extends StatelessWidget {
       crossAxisCount: 2,
       mainAxisSpacing: 8,
       crossAxisSpacing: 8,
-      padding: const EdgeInsets.symmetric(horizontal: kSidePadding),
+      padding: EdgeInsets.symmetric(horizontal: AppDimensions.sidePadding),
       itemBuilder: (context, index) {
         return _NoteCard(
           note: notes[index],
-          color: colorPalette[Random().nextInt(colorPalette.length)],
+          color: AppColors
+              .colorPalette[Random().nextInt(AppColors.colorPalette.length)],
           onTap: () {
             Navigator.of(context)
                 .push<void>(NotePage.route(id: notes[index].id))
@@ -262,7 +263,7 @@ class _DeleteDialog extends StatelessWidget {
   @override
   Widget build(BuildContext ctx) {
     return SimpleDialog(
-      backgroundColor: kButtonColor,
+      backgroundColor: AppColors.buttonColor,
       contentPadding: const EdgeInsets.all(8),
       children: [
         SimpleDialogOption(

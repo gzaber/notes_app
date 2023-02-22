@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app/common/common.dart';
+import '../colors/app_colors.dart';
+import '../dimensions/app_dimensions.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   final Widget widget;
@@ -14,12 +15,16 @@ class CustomElevatedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:
-          const EdgeInsets.fromLTRB(kSidePadding, 16.0, kSidePadding, 16.0),
+      padding: EdgeInsets.fromLTRB(
+        AppDimensions.sidePadding,
+        16.0,
+        AppDimensions.sidePadding,
+        16.0,
+      ),
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: kButtonColor,
+          backgroundColor: AppColors.buttonColor,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         ),
