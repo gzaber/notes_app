@@ -12,7 +12,7 @@ void main() {
           toolbarHeight: AppDimensions.appBarHeight,
           elevation: 0,
           centerTitle: false,
-          titleTextStyle: const TextStyle(fontSize: 32, color: Colors.white)),
+          titleTextStyle: const TextStyle(fontSize: 40, color: Colors.white)),
       scaffoldBackgroundColor: Colors.black,
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: AppColors.buttonColor),
